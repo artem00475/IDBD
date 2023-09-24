@@ -21,7 +21,8 @@ def getTeams(teams_list: list):
             players_list - список объектов, полученных в результате логического запроса"""
     teams = []
     for team in teams_list:
-        teams.append(team['Team'])
+        if team['Team'] not in teams:
+            teams.append(team['Team'])
     return teams
 
 
@@ -124,6 +125,14 @@ def getTeamsWithoutGun(gun: str):
 
                    gun - тип оружия"""
     teams_list = list(prolog.query("team_has_not_gun(Team," + gun + ")."))
+    return getTeams(teams_list)
+
+
+def getTeamsWithAgeAbove(age: int):
+    """Функция возвращает спискок команд, в которых есть игрок старше возраста
+
+                   age - возраст игрока"""
+    teams_list = list(prolog.query("player_in_team(Player,Team),player_age(Player, Age),Age >"+str(age)+"."))
     return getTeams(teams_list)
 
 
