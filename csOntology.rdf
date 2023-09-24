@@ -1,0 +1,479 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl/"
+     xml:base="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:csOntology="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology#"
+     xmlns:csOntology1="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl">
+        <owl:versionIRI rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology/1.0.0"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerGun -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerGun">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponForPlayer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+        <rdfs:comment>Игрок, играющий с данным оружием</rdfs:comment>
+        <rdfs:label>играетСОружием</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerInTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerInTeam">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:comment>Команда, в которой находится игрок</rdfs:comment>
+        <rdfs:label>командаИгрока</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerWonTournament -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerWonTournament">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tornamentWonByPlayer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+        <rdfs:comment>Игрок, выигравший данный турнир</rdfs:comment>
+        <rdfs:label>игрокВыигралТурнир</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playersInTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playersInTeam">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerInTeam"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>Игроки в одной команде с данным</rdfs:comment>
+        <rdfs:label>игрокиВОднойКоманде</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <rdfs:comment>Игрок, находящийся в данной команде</rdfs:comment>
+        <rdfs:label>игрокКоманды</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamWithGun -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamWithGun">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponInTeam"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerInTeam"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerGun"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>Команда, имющая игрока с таким оружием</rdfs:comment>
+        <rdfs:label>командаСОружием</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamWonTournament -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamWonTournament">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tournamentForTeam"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerInTeam"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#playerWonTournament"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>Команда, выигравшая данный турнир</rdfs:comment>
+        <rdfs:label>командаВыигралаТурнир</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tornamentWonByPlayer -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tornamentWonByPlayer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:comment>Турнир, который выиграл игрок</rdfs:comment>
+        <rdfs:label>турнирВыигралИгрок</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tournamentForTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tournamentForTeam">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#tornamentWonByPlayer"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>Тернир, который выиграла команда</rdfs:comment>
+        <rdfs:label>турнирВыгралаКоманда</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponForPlayer -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponForPlayer">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:comment>Оружие, с которым играет игрок</rdfs:comment>
+        <rdfs:label>оружиеУИгрока</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponInTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponInTeam">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#weaponForPlayer"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#teamHasPlayer"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>Оружие, имющеюся у игроков данной команды</rdfs:comment>
+        <rdfs:label>оружиеВКоманде</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Age -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Age">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Возраст игрока</rdfs:comment>
+        <rdfs:label>Возраст</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Level -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Level">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+        <rdfs:comment>Уровень команды (чем меньше значение, тем выше)</rdfs:comment>
+        <rdfs:label>Уровень</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun">
+        <rdfs:label>Оружие</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player">
+        <rdfs:label>Игрок</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team">
+        <rdfs:label>Команда</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament">
+        <rdfs:label>Турнир</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#astralis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#astralis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <csOntology1:Level rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</csOntology1:Level>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#ax1Le -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#ax1Le">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#brazyParty"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cloud9"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">22</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#blameF -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#blameF">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#astralis"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">24</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#brazyParty -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#brazyParty">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cloud9 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cloud9">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <csOntology1:Level rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</csOntology1:Level>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cologne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cologne">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#frozen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#frozen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">21</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#g2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#g2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <csOntology1:Level rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</csOntology1:Level>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#gamers8 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#gamers8">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#katowice -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#katowice">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#m0NESY -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#m0NESY">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#g2"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">19</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#navi -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#navi">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <csOntology1:Level rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</csOntology1:Level>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#niKo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#niKo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cologne"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#katowice"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#g2"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#parisMajor -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#parisMajor">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Tournament"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Gun"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#ropz -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#ropz">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">23</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#s1mple -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#s1mple">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#navi"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">24</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#sh1ro -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#sh1ro">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#brazyParty"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#cloud9"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">22</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#sunPayus -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#sunPayus">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#rifle"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">20</csOntology1:Age>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#vitality -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#vitality">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Team"/>
+        <csOntology1:Level rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</csOntology1:Level>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#zywOo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#zywOo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#Player"/>
+        <csOntology1:playerGun rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#awp"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#gamers8"/>
+        <csOntology1:playerWonTournament rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#parisMajor"/>
+        <csOntology1:teamHasPlayer rdf:resource="http://www.semanticweb.org/артём/ontologies/2023/8/csOntology.owl#vitality"/>
+        <csOntology1:Age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">21</csOntology1:Age>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
+
