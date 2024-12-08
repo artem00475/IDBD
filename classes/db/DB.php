@@ -3,7 +3,6 @@
 namespace classes\db;
 
 use classes\db\handler\ClientProfileHandler;
-use classes\db\handler\DaysHandler;
 use classes\db\handler\FeedbackHandler;
 use classes\db\handler\MasterLogsHandler;
 use classes\db\handler\MasterProfileHandler;
@@ -25,7 +24,6 @@ abstract class DB
 {
     protected static UserHandler $userHandler;
     protected static ClientProfileHandler $clientProfileHandler;
-    protected static DaysHandler $daysHandler;
     protected static FeedbackHandler $feedbackHandler;
     protected static MasterLogsHandler $masterLogsHandler;
     protected static MasterStatusHandler $masterStatusHandler;
@@ -47,7 +45,6 @@ abstract class DB
 
     abstract static function getUserHandler(): UserHandler;
     abstract static function getClientProfileHandler(): ClientProfileHandler;
-    abstract static function getDaysHandler(): DaysHandler;
     abstract static function getFeedbackHandler(): FeedbackHandler;
     abstract static function getMasterLogsHandler(): MasterLogsHandler;
     abstract static function getMasterProfileHandler(): MasterProfileHandler;

@@ -3,10 +3,8 @@
 namespace classes\db;
 
 use classes\db\handler\ClientProfileHandler;
-use classes\db\handler\DaysHandler;
 use classes\db\handler\FeedbackHandler;
 use classes\db\handler\impl\ClientProfileHandlerImpl;
-use classes\db\handler\impl\DaysHandlerImpl;
 use classes\db\handler\impl\FeedbackHandlerImpl;
 use classes\db\handler\impl\MasterLogsHandlerImpl;
 use classes\db\handler\impl\MasterProfileHandlerImpl;
@@ -88,14 +86,6 @@ class DBPostgres extends DB
             static::$clientProfileHandler = new ClientProfileHandlerImpl();
         }
         return static::$clientProfileHandler;
-    }
-
-    static function getDaysHandler(): DaysHandler
-    {
-        if (!static::$daysHandler) {
-            static::$daysHandler = new DaysHandlerImpl();
-        }
-        return static::$daysHandler;
     }
 
     static function getFeedbackHandler(): FeedbackHandler
