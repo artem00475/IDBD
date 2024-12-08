@@ -17,5 +17,4 @@ drop table qa;
 drop table schedule;
 drop table day;
 drop table master;
-drop table human;
 drop table accounts;

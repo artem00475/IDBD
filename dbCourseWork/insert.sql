@@ -1,21 +1,12 @@
-insert into accounts (login, password)  values
-('kapibara2018','qwerty123'),
-('777terminator777','qpwofn2j_83'),
-('the_best_master','12345'),
-('the_best_client00','987732gj'),
-('anton_ivanov1999','923hfhfg2'),
-('user29','qwerty100');
+insert into accounts (login, password, name, surname, email, phone)  values
+('kapibara2018','qwerty123', 'Ivan','Jsonov','kapibara2018@mail.ru','89218882021'),
+('777terminator777','qpwofn2j_83', 'Vlad','Petrov','777terminator777@mail.ru','89002652956'),
+('the_best_master','12345', 'Andrew','Mikhailov','the_best_master@mail.ru','89926750567'),
+('the_best_client00','987732gj', 'Vlad','Petrov','the_best_client00@mail.ru','89543214878'),
+('anton_ivanov1999','923hfhfg2', 'Anton','Ivanov','anton_ivanov1999@mail.ru','89225920982'),
+('user29','qwerty100', 'John','Doe','user29@mail.ru','89010001010');
 
-
-insert into human (userId, name, surname, email, telNumber) values
-(1,'Ivan','Jsonov','kapibara2018@mail.ru','89218882021'),
-(2,'Vlad','Petrov','777terminator777@mail.ru','89002652956'),
-(3,'Andrew','Mikhailov','the_best_master@mail.ru','89926750567'),
-(4,'Vlad','Petrov','the_best_client00@mail.ru','89543214878'),
-(5,'Anton','Ivanov','anton_ivanov1999@mail.ru','89225920982'),
-(6,'John','Doe','user29@mail.ru','89010001010');
-
-insert into master (humanId, experience, qualification) values
+insert into master (userId, experience, qualification) values
 (1, 2, 'Курсы мастера по починке кухонной техники'),
 (2, 1, 'Курсы мастера по починке микроволновок'),
 (3, 10, 'Высшее образование в сфере починки кофемашин');
@@ -62,7 +53,7 @@ insert into plan (techniqueId, name, cost) values
 (2,'Защити свою микроволновку!', 790),
 (3,'Защити свою кофемашинку!', 1290);
 
-insert into client (humanId, address) values
+insert into client (userId, address) values
 (4, 'ул. Пушкина д. 45 кв. 23'),
 (5, 'ул. Пушкина д. 45 кв. 22'),
 (6, 'ул. Пушкина д. 45 кв. 21');

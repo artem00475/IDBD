@@ -2,18 +2,15 @@ create table accounts(
 	id serial primary key,
 	login varchar(20) not null unique,
 	password varchar(50) not null,
-	active boolean not null default true
+	active boolean not null default true,
+    name varchar(20) not null,
+    surname varchar(20) not null,
+    email varchar(30) not null unique,
+    phone char(11) not null unique);
 );
-create table human (
-id serial primary key,
-userId integer references accounts(id),
-name varchar(20) not null,
-surname varchar(20) not null,
-email varchar(30) not null unique,
-telNumber char(11) not null unique);
 create table master (
 	id serial primary key,
-	humanId integer not null references human(id),
+	userId integer not null references accounts(id),
 	rating real default 0,
 	photo varchar(50) unique,
 	experience smallint not null,
@@ -55,8 +52,9 @@ create table plan(
 );
 create table client(
 	id serial primary key,
-	humanId integer references human(id),
-address varchar(30) not null
+	userId integer references accounts(id),
+    address varchar(30) not null,
+    photo varchar(50) unique
 );
 create table owner(
 	techniqueId integer references technique(id),
