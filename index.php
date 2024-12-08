@@ -33,7 +33,7 @@ include_once "db.php";
             <div class="element">
                 <label for="technique">Выберите прибор</label>
                 <select  name="technique" required>
-                <?php while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                <?php while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $obj['get_owners'] = trim($obj['get_owners'], '()');
                     $ar = explode(",",$obj['get_owners']);
                     ?>
@@ -61,7 +61,7 @@ include_once "db.php";
         $stmt->execute();
 
         // return the result set as an object
-        while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $obj['get_client_current_orders'] = trim($obj['get_client_current_orders'], '()');
             $ar = explode(",",$obj['get_client_current_orders']);
             // var_dump($ar);
@@ -95,7 +95,7 @@ include_once "db.php";
         $stmt->execute();
 
         // return the result set as an object
-        while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $obj['get_client_history_orders'] = trim($obj['get_client_history_orders'], '()');
             $ar = explode(",",$obj['get_client_history_orders']);
             // var_dump($ar);

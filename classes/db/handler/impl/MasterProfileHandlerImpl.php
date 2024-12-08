@@ -85,4 +85,22 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
             return 0;
         }
     }
+
+    function getAll(): array
+    {
+        $req = DBPostgres::getConnection()->query('SELECT findall_workers()');
+        $arWorker = [];
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $obj['findall_workers'] = trim($obj['findall_workers'], '()');
+            $ar = explode(",", $obj['findall_workers']);
+            $arWorker[$ar[4]] = [
+                'NAME' => $ar[1],
+                'RATE' => $ar[2],
+                'EXPERIENCE' => $ar[3],
+                'PHOTO' => $ar[0],
+                'QUALIFICATION' => $ar[5]
+            ];
+        }
+        return $arWorker;
+    }
 }

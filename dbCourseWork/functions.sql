@@ -477,12 +477,13 @@ RETURNS TABLE (
   w_name TEXT,
   w_rating real,
   w_experience smallint,
-  w_id int
+  w_id int,
+  w_qualification varchar(100)
 )AS
 $$
 BEGIN
   RETURN QUERY
-  select master.photo, concat(accounts.name,' ', accounts.surname), master.rating, master.experience, master.id from master
+  select master.photo, concat(accounts.name,' ', accounts.surname), master.rating, master.experience, master.id, master.qualification from master
   join accounts on  accounts.id=master.userId;
   END;
 $$ LANGUAGE plpgsql;
