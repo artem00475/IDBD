@@ -1,13 +1,15 @@
-<?php 
+<?php
+
+use classes\db\DBPostgres;
+
 include_once "header.php";
 include_once "db.php";
-global $db_connect;
 ?>
 <div class='main'>
     <h1>Заказы</h1>
     <div class="btn_block">
         <button class="btn" onclick="showForm(this)" <?php if($_GET['masterId']):?>style="display: none;"<?php endif?>>Создать заказ</button>
-        <?php $stmt = $db_connect->prepare('SELECT get_owners(:user)');
+        <?php $stmt = DBPostgres::getConnection()->prepare('SELECT get_owners(:user)');
 
         $stmt->bindValue(':user', $_COOKIE['USER_ID']);
         // execute the statement
@@ -52,7 +54,7 @@ global $db_connect;
         // мастер
         // оплата
         // комментарий
-        $stmt = $db_connect->prepare('SELECT get_client_current_orders(:user)');
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_client_current_orders(:user)');
 
         $stmt->bindValue(':user', $_COOKIE['USER_ID']);
         // execute the statement
@@ -86,7 +88,7 @@ global $db_connect;
         // мастер
         // оплата
         // комментарий
-        $stmt = $db_connect->prepare('SELECT get_client_history_orders(:user)');
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_client_history_orders(:user)');
 
         $stmt->bindValue(':user', $_COOKIE['USER_ID']);
         // execute the statement

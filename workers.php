@@ -1,7 +1,9 @@
-<?php 
+<?php
+
+use classes\db\DBPostgres;
+
 include_once "header.php";
 include_once "db.php";
-global $db_connect;
 ?>
 
 <div class='main'>
@@ -9,12 +11,12 @@ global $db_connect;
     <div class="list">
         <?php
          try {
-            $req = $db_connect->query('SELECT findall_workers()');
+            $req = DBPostgres::getConnection()->query('SELECT findall_workers()');
             while ($obj = $req->fetch(\PDO::FETCH_ASSOC)){
                 $obj['findall_workers'] = trim($obj['findall_workers'], '()');
                 $ar = explode(",",$obj['findall_workers']);
 
-                $req2=$db_connect->prepare('SELECT get_master_schedule(:master_id)');
+                $req2=DBPostgres::getConnection()->prepare('SELECT get_master_schedule(:master_id)');
                 $req2->bindValue(':master_id',$ar[4]);
                 $req2->execute();
                 $full_schedule='';

@@ -1,14 +1,16 @@
-<?php 
+<?php
+
+use classes\db\DBPostgres;
+
 include_once "header.php";
 include_once "db.php";
-global $db_connect;
 ?>
 <div class='main'>
     <h1>Подписка</h1>
     <div class="btn_block">
         <button class="btn" onclick="showForm(this)">Оформить новую подписку</button>
         <form action="backend.php" id='form' class="subscribe-form" method="post">
-        <?php $stmt = $db_connect->query('SELECT get_subscribe_plans()');
+        <?php $stmt = DBPostgres::getConnection()->query('SELECT get_subscribe_plans()');
         ?>
         <input type="text" hidden name="action_type" value="new_subscribe">
             <div class="element">
@@ -35,7 +37,7 @@ global $db_connect;
     </div>
     <div class="list">
     <?php
-        $req = $db_connect->prepare('SELECT findall_subscribes(:user_id)');
+        $req = DBPostgres::getConnection()->prepare('SELECT findall_subscribes(:user_id)');
         $req->bindValue(':user_id',$_COOKIE['USER_ID']);
         $req->execute();
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)){

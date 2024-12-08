@@ -1,19 +1,22 @@
-<?php 
+<?php
+
+use classes\db\DBPostgres;
+
 include_once "header.php";
 if ($_GET["action"] && $_GET['id']) {
     if ($_GET["action"] == 'approve') {
-        $req = $db_connect->prepare('SELECT accept_order(:order_id,:master_id)');
+        $req = DBPostgres::getConnection()->prepare('SELECT accept_order(:order_id,:master_id)');
         $req->bindValue(':master_id',$_COOKIE['USER_ID']);
         $req->bindValue(':order_id',$_GET['id']);
         $req->execute();
     } elseif ($_GET["action"] == 'reject') {
-        $req = $db_connect->prepare('SELECT reject_order(:order_id,:master_id)');
+        $req = DBPostgres::getConnection()->prepare('SELECT reject_order(:order_id,:master_id)');
         $req->bindValue(':master_id',$_COOKIE['USER_ID']);
         $req->bindValue(':order_id',$_GET['id']);
         $req->execute();
 
         try {
-            $req = $db_connect->prepare('SELECT get_masters(:date)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_masters(:date)');
             $req->bindValue(':date',$_GET['date']);
             $req->execute();
             $table = [];
@@ -24,11 +27,11 @@ if ($_GET["action"] && $_GET['id']) {
             }
             $index = array_search($_COOKIE['USER_ID'], $table);
             if ($index == count($table)-1) {
-                $req = $db_connect->prepare('SELECT cancel_order(:order_id)');
+                $req = DBPostgres::getConnection()->prepare('SELECT cancel_order(:order_id)');
                 $req->bindValue(':order_id',$_GET['id']);
                 $req->execute();
             } else {
-                $req = $db_connect->prepare('SELECT add_order(:order_id, :master_id)');
+                $req = DBPostgres::getConnection()->prepare('SELECT add_order(:order_id, :master_id)');
                 $req->bindValue(':order_id',$_GET['id']);
                 $req->bindValue(':master_id',intval($table[$index+1]));
                 $req->execute();
@@ -38,7 +41,7 @@ if ($_GET["action"] && $_GET['id']) {
         }
 
     } elseif ($_GET["action"] == 'finish') {
-        $req = $db_connect->prepare('SELECT finish_order(:order_id,:master_id)');
+        $req = DBPostgres::getConnection()->prepare('SELECT finish_order(:order_id,:master_id)');
         $req->bindValue(':master_id',$_COOKIE['USER_ID']);
         $req->bindValue(':order_id',$_GET['id']);
         $req->execute();
@@ -52,7 +55,7 @@ if ($_GET["action"] && $_GET['id']) {
     <div class="list">
         <?php
         try {
-            $req = $db_connect->prepare('SELECT get_master_new_orders(:user_id)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_master_new_orders(:user_id)');
             $req->bindValue(':user_id',$_COOKIE['USER_ID']);
             $req->execute();
             while ($obj = $req->fetch(\PDO::FETCH_ASSOC)){
@@ -84,7 +87,7 @@ if ($_GET["action"] && $_GET['id']) {
     <h2>Активные заказы</h2>
     <div class="list">
         <?php
-            $req = $db_connect->prepare('SELECT get_master_current_orders(:user_id)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_master_current_orders(:user_id)');
             $req->bindValue(':user_id',$_COOKIE['USER_ID']);
             $req->execute();
             while ($obj = $req->fetch(\PDO::FETCH_ASSOC)){
@@ -113,7 +116,7 @@ if ($_GET["action"] && $_GET['id']) {
     <h2>История заказов</h2>
     <div class="list">
         <?php
-            $req = $db_connect->prepare('SELECT get_master_order_history(:user_id)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_master_order_history(:user_id)');
             $req->bindValue(':user_id',$_COOKIE['USER_ID']);
             $req->execute();
             while ($obj = $req->fetch(\PDO::FETCH_ASSOC)){

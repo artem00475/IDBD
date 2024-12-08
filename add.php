@@ -1,9 +1,11 @@
-<?php include_once "header.php";?>
+<?php use classes\db\DBPostgres;
+
+include_once "header.php";?>
 <div class='main'>
     <h1>Добавление прибора</h1>
     <form method='POST' class='rate-order-form' id='form' style="display: flex;" action="backend.php">
     <input type="text" hidden name="action_type" value="add_technique">
-    <?php $stmt = $db_connect->query('SELECT get_technique()');?>
+    <?php $stmt = DBPostgres::getConnection()->query('SELECT get_technique()');?>
             <div class="element">
                 <label for="date">Дата покупки</label>
                 <input type="date" name='date' required>
@@ -24,7 +26,7 @@
     <h2>Ваши приборы</h2>
     <div class="list">
         <?php
-        $stmt = $db_connect->prepare('SELECT get_owners(:user)');
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_owners(:user)');
 
         $stmt->bindValue(':user', $_COOKIE['USER_ID']);
         // execute the statement

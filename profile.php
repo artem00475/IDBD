@@ -1,4 +1,6 @@
-<?php include_once "header.php";?>
+<?php use classes\db\DBPostgres;
+
+include_once "header.php";?>
 <div class='main'>
 <h1>Профиль</h1>
 <?php if ($_GET['change'] == 'y'):?>
@@ -25,7 +27,7 @@
                 <img src="/~s338923/isbd/img/worker-<?=$_COOKIE['USER_ID']?>.jpg" alt="master_photo" class="avatar">
             </div>
             <?php
-            $req = $db_connect->prepare('SELECT get_master_profile(:user_id)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_master_profile(:user_id)');
             $req->bindValue(':user_id',$_COOKIE['USER_ID']);
             $req->execute();
             $obj = $req->fetch(\PDO::FETCH_ASSOC);
@@ -38,7 +40,7 @@
                 <p>Стаж: <?=$ar[4]?></p>
                 <p>Расписание:
                 <?php
-            $req = $db_connect->prepare('SELECT get_master_schedule(:user_id)');
+            $req = DBPostgres::getConnection()->prepare('SELECT get_master_schedule(:user_id)');
             $req->bindValue(':user_id',$_COOKIE['USER_ID']);
             $req->execute();
             while($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
