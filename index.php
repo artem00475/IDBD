@@ -48,7 +48,7 @@ include_once "db.php";
                     <p>Заказ №<?= $order->getId();?> Статус - <?= $order->getStatus();?></p>
                     <p>Тип техники: <?= $order->getTechnique();?></p>
                     <p>Дата ремонта: <?= $order->getDate();?></p>
-                    <p>Мастер: <?= $order->getMasterId();?></p>
+                    <p>Мастер: <?= $order->getMaster();?></p>
                     <p>Оплата: <?= $order->getPayment();?></p>
                     <p>Комментарий: <?= $order->getContent();?></p>
                 </div>
@@ -68,7 +68,7 @@ include_once "db.php";
                     <p>Заказ №<?= $order->getId();?> Статус - <?= $order->getStatus();?></p>
                     <p>Тип техники: <?= $order->getTechnique();?></p>
                     <p>Дата ремонта: <?= $order->getDate();?></p>
-                    <p>Мастер: <?= $order->getMasterId();?></p>
+                    <p>Мастер: <?= $order->getMaster();?></p>
                     <p>Оплата: <?= $order->getPayment();?></p>
                     <p>Комментарий: <?= $order->getContent();?></p>
                 </div>

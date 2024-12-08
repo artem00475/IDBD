@@ -12,7 +12,7 @@ class Order
     private string $content;
     private int $cost;
     private string $date;
-    private int $masterId;
+    private string $master;
 
     public function getId(): int
     {
@@ -94,13 +94,13 @@ class Order
         $this->date = $date;
     }
 
-    public function getMasterId(): int
+    public function getMaster(): string
     {
-        return $this->masterId;
+        return $this->master;
     }
 
-    public function setMasterId(int $masterId): void
+    public function setMaster(string $master): void
     {
-        $this->masterId = $masterId;
+        $this->master = $master;
     }
 }

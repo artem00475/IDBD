@@ -22,7 +22,7 @@ class OrderHandlerImpl implements OrderHandler
             $order->setPayment($ar[2]);
             $order->setDate($ar[3]);
             $order->setStatus($ar[4]);
-            $order->setMasterId($ar[5]);
+            $order->setMaster($ar[5]);
             $order->setTechnique($ar[6]);
             $arOrder[$ar[0]] = $order;
         }
@@ -44,7 +44,7 @@ class OrderHandlerImpl implements OrderHandler
             $order->setPayment($ar[2]);
             $order->setDate($ar[3]);
             $order->setStatus($ar[4]);
-            $order->setMasterId($ar[5]);
+            $order->setMaster($ar[5]);
             $order->setTechnique($ar[6]);
             $arOrder[$ar[0]] = $order;
         }

@@ -413,12 +413,12 @@ RETURNS TABLE (
 	payment varchar(50),
 	date DATE,
 	status varchar(50),
-	master INT,
+	master TEXT,
 	technique varchar(20)
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, masterLog.masterId, technique.name
+	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(accounts.name,' ', accounts.surname), technique.name
 	FROM orders
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
@@ -437,12 +437,12 @@ RETURNS TABLE (
 	payment varchar(50),
 	date DATE,
 	status varchar(50),
-	master INT,
+	master TEXT,
 	technique varchar(20)
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, masterLog.masterId, technique.name
+	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(accounts.name,' ', accounts.surname), technique.name
 	FROM orders
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
