@@ -343,24 +343,38 @@ CREATE OR REPLACE FUNCTION check_password(
 ) RETURNS RECORD AS $$
 DECLARE
     hashed_password VARCHAR(255);
-	client_id integer;
-	master_id integer;
 	ret RECORD;
 BEGIN
     -- Получаем хэшированный пароль для данного логина
-    SELECT client.id into client_id
+    SELECT id into ret
     FROM accounts
-JOIN human on human.userid = accounts.id
-JOIN client on human.id = client.humanid
     WHERE login = in_username and password = in_password;
-    SELECT master.id into master_id
-    FROM accounts
-JOIN human on human.userid = accounts.id
-JOIN master on human.id = master.humanid
-    WHERE login = in_username and password = in_password;
-IF client_id IS NOT NULL THEN SELECT client_id, 'Client' into ret;
-ELSEIF master_id IS NOT NULL THEN SELECT master_id, 'Master' into ret;
-END IF;
+RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_client(
+    in_user integer,
+) RETURNS RECORD AS $$
+DECLARE
+	ret RECORD;
+BEGIN
+    SELECT id into ret
+    FROM clients
+    WHERE userId = in_user;
+RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_master(
+    in_user integer,
+) RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+SELECT id into ret
+FROM masters
+WHERE userId = in_user;
 RETURN RET;
 END;
 $$ LANGUAGE plpgsql;

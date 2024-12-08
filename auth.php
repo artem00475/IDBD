@@ -9,6 +9,7 @@
 <body>
 <div class="registration-cssave">
     <?php
+        use classes\db\DBPostgres;
         if ($_GET['exit'] && $_GET['exit'] == 'y') {
             setcookie("USER_ID", '');
             setcookie("ROLE", '');
@@ -30,23 +31,10 @@
             }
             if ($login && $pass) {
                 include_once "db.php";
-                $stmt = $db_connect->prepare('SELECT check_password(:login, :password)');
-
-                // bind value to the :id parameter
-                $stmt->bindValue(':login', $_POST['username']);
-                $stmt->bindValue(':password', $_POST['password']);
-                // execute the statement
-                $stmt->execute();
-
-                // return the result set as an object
-                $obj = $stmt->fetch(\PDO::FETCH_ASSOC);
-                
-                if ($obj['check_password']) {
-                    $obj['check_password'] = trim($obj['check_password'], '()');
-                    $ar = explode(",",$obj['check_password']);
-                    setcookie("USER_ID", $ar[0]);
-                    setcookie("ROLE", $ar[1]);
-                    $page = $ar[1] == "Client" ? 'index' : 'orders';
+                if ($userId = DBPostgres::getUserHandler()->authorize($_POST['username'], $_POST['password'])) {
+                    setcookie("USER_ID", $userId);
+                    setcookie("ROLE", "Client");
+                    $page = "Client" ? 'index' : 'orders';
                     header('Location: https://se.ifmo.ru/~s338923/isbd/'. $page .'.php');
                 } else {
                     echo "Неправильный логин или пароль";
