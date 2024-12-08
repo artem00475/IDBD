@@ -8,14 +8,11 @@ use classes\db\handler\impl\ClientProfileHandlerImpl;
 use classes\db\handler\impl\FeedbackHandlerImpl;
 use classes\db\handler\impl\MasterLogsHandlerImpl;
 use classes\db\handler\impl\MasterProfileHandlerImpl;
-use classes\db\handler\impl\MasterStatusHandlerImpl;
 use classes\db\handler\impl\OrderHandlerImpl;
-use classes\db\handler\impl\OrderStatusHandlerImpl;
 use classes\db\handler\impl\OwnerHandlerImpl;
 use classes\db\handler\impl\PaymentTypeHandlerImpl;
 use classes\db\handler\impl\PlanHandlerImpl;
 use classes\db\handler\impl\QAHandlerImpl;
-use classes\db\handler\impl\RequestStatusHandlerImpl;
 use classes\db\handler\impl\ScheduleHandlerImpl;
 use classes\db\handler\impl\SubscriberHandlerImpl;
 use classes\db\handler\impl\SupportRequestHandlerImpl;
@@ -23,14 +20,11 @@ use classes\db\handler\impl\TechniqueHandlerImpl;
 use classes\db\handler\impl\UserHandlerImpl;
 use classes\db\handler\MasterLogsHandler;
 use classes\db\handler\MasterProfileHandler;
-use classes\db\handler\MasterStatusHandler;
 use classes\db\handler\OrderHandler;
-use classes\db\handler\OrderStatusHandler;
 use classes\db\handler\OwnerHandler;
 use classes\db\handler\PaymentTypeHandler;
 use classes\db\handler\PlanHandler;
 use classes\db\handler\QAHandler;
-use classes\db\handler\RequestStatusHandler;
 use classes\db\handler\ScheduleHandler;
 use classes\db\handler\SubscriberHandler;
 use classes\db\handler\SupportRequestHandler;
@@ -112,13 +106,6 @@ class DBPostgres extends DB
         return static::$masterProfileHandler;
     }
 
-    static function getMasterStatusHandler(): MasterStatusHandler
-    {
-        if (!static::$masterStatusHandler) {
-            static::$masterStatusHandler = new MasterStatusHandlerImpl();
-        }
-        return static::$masterStatusHandler;
-    }
 
     static function getOrderHandler(): OrderHandler
     {
@@ -128,13 +115,6 @@ class DBPostgres extends DB
         return static::$orderHandler;
     }
 
-    static function getOrderStatusHandler(): OrderStatusHandler
-    {
-        if (!static::$orderStatusHandler) {
-            static::$orderStatusHandler = new OrderStatusHandlerImpl();
-        }
-        return static::$orderStatusHandler;
-    }
 
     static function getOwnerHandler(): OwnerHandler
     {
@@ -168,13 +148,6 @@ class DBPostgres extends DB
         return static::$QAHandler;
     }
 
-    static function getRequestStatusHandler(): RequestStatusHandler
-    {
-        if (!static::$requestStatusHandler) {
-            static::$requestStatusHandler = new RequestStatusHandlerImpl();
-        }
-        return static::$requestStatusHandler;
-    }
 
     static function getSubscriberHandler(): SubscriberHandler
     {
