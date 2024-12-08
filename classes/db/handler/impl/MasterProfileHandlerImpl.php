@@ -18,7 +18,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         if ($obj['check_master']) {
             $obj['check_master'] = trim($obj['check_master'], '()');
             $ar = explode(",",$obj['check_master']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
@@ -38,7 +38,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         if ($obj['create_master']) {
             $obj['create_master'] = trim($obj['create_master'], '()');
             $ar = explode(",",$obj['create_master']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
@@ -80,7 +80,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         if ($obj['update_master']) {
             $obj['update_master'] = trim($obj['update_master'], '()');
             $ar = explode(",", $obj['update_master']);
-            return $ar[0];
+            return (bool)$ar[0];
         } else {
             return 0;
         }

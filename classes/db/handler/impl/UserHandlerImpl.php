@@ -23,7 +23,7 @@ class UserHandlerImpl implements UserHandler
         if ($obj['create_user']) {
             $obj['create_user'] = trim($obj['create_user'], '()');
             $ar = explode(",",$obj['create_user']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
@@ -81,7 +81,7 @@ class UserHandlerImpl implements UserHandler
         if ($obj['check_password']) {
             $obj['check_password'] = trim($obj['check_password'], '()');
             $ar = explode(",",$obj['check_password']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }

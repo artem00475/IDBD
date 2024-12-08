@@ -19,7 +19,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
         if ($obj['check_client']) {
             $obj['check_client'] = trim($obj['check_client'], '()');
             $ar = explode(",",$obj['check_client']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
@@ -37,7 +37,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
         if ($obj['create_client']) {
             $obj['create_client'] = trim($obj['create_client'], '()');
             $ar = explode(",",$obj['create_client']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
@@ -75,7 +75,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
         if ($obj['update_client']) {
             $obj['update_client'] = trim($obj['update_client'], '()');
             $ar = explode(",",$obj['update_client']);
-            return $ar[0];
+            return $ar[0] ?: 0;
         } else {
             return 0;
         }
