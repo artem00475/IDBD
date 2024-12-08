@@ -5,7 +5,7 @@ namespace classes\db\entity;
 class Order
 {
     private int $id;
-    private int $clientId;
+    private string $client;
     private string $technique;
     private string $payment;
     private string $status;
@@ -24,14 +24,14 @@ class Order
         $this->id = $id;
     }
 
-    public function getClientId(): int
+    public function getClient(): string
     {
-        return $this->clientId;
+        return $this->client;
     }
 
-    public function setClientId(int $clientId): void
+    public function setClient(string $client): void
     {
-        $this->clientId = $clientId;
+        $this->client = $client;
     }
 
     public function getTechnique(): string
