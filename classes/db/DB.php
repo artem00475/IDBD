@@ -22,23 +22,23 @@ use classes\db\handler\UserHandler;
 
 abstract class DB
 {
-    protected static UserHandler $userHandler;
-    protected static ClientProfileHandler $clientProfileHandler;
-    protected static FeedbackHandler $feedbackHandler;
-    protected static MasterLogsHandler $masterLogsHandler;
-    protected static MasterStatusHandler $masterStatusHandler;
-    protected static MasterProfileHandler $masterProfileHandler;
-    protected static OrderHandler $orderHandler;
-    protected static OrderStatusHandler $orderStatusHandler;
-    protected static OwnerHandler $ownerHandler;
-    protected static PaymentTypeHandler $paymentTypeHandler;
-    protected static PlanHandler $planHandler;
-    protected static QAHandler $QAHandler;
-    protected static RequestStatusHandler $requestStatusHandler;
-    protected static ScheduleHandler $scheduleHandler;
-    protected static SubscriberHandler $subscriberHandler;
-    protected static SupportRequestHandler $supportRequestHandler;
-    protected static TechniqueHandler $techniqueHandler;
+    protected static ?UserHandler $userHandler = null;
+    protected static ?ClientProfileHandler $clientProfileHandler = null;
+    protected static ?FeedbackHandler $feedbackHandler = null;
+    protected static ?MasterLogsHandler $masterLogsHandler = null;
+    protected static ?MasterStatusHandler $masterStatusHandler = null;
+    protected static ?MasterProfileHandler $masterProfileHandler = null;
+    protected static ?OrderHandler $orderHandler = null;
+    protected static ?OrderStatusHandler $orderStatusHandler = null;
+    protected static ?OwnerHandler $ownerHandler = null;
+    protected static ?PaymentTypeHandler $paymentTypeHandler = null;
+    protected static ?PlanHandler $planHandler = null;
+    protected static ?QAHandler $QAHandler = null;
+    protected static ?RequestStatusHandler $requestStatusHandler = null;
+    protected static ?ScheduleHandler $scheduleHandler = null;
+    protected static ?SubscriberHandler $subscriberHandler = null;
+    protected static ?SupportRequestHandler $supportRequestHandler = null;
+    protected static ?TechniqueHandler $techniqueHandler = null;
     abstract static function connect();
 
     abstract static function isConnected(): bool;
