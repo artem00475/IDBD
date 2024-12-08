@@ -6,7 +6,7 @@ create table accounts(
     name varchar(20) not null,
     surname varchar(20) not null,
     email varchar(30) not null unique,
-    phone char(11) not null unique)
+    phone char(11) not null unique
 );
 create table master (
 	id serial primary key,

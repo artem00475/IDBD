@@ -8,14 +8,14 @@ include_once "db.php";
 <div class='main'>
     <h1>Заказы</h1>
     <div class="btn_block">
-        <button class="btn" onclick="showForm(this)" <?php if($_GET['masterId']):?>style="display: none;"<?php endif?>>Создать заказ</button>
+        <button class="btn" onclick="showForm(this)" <?php if(array_key_exists('masterId', $_GET)):?>style="display: none;"<?php endif?>>Создать заказ</button>
         <?php $stmt = DBPostgres::getConnection()->prepare('SELECT get_owners(:user)');
 
         $stmt->bindValue(':user', $_COOKIE['USER_ID']);
         // execute the statement
         $stmt->execute();
         ?>
-        <form method='POST' class='save-order-form' id='form' action="backend.php" <?php if($_GET['masterId']):?>style="display: flex;"<?php endif?>>
+        <form method='POST' class='save-order-form' id='form' action="backend.php" <?php if(array_key_exists('masterId', $_GET)):?>style="display: flex;"<?php endif?>>
             <?php if($_GET['masterId']) {?>
                 <input type="text" hidden name="action_type" value="create_order_master">
                 <input type="text" hidden name="masterId" value="<?=$_GET['masterId']?>">
@@ -103,7 +103,7 @@ include_once "db.php";
             <div class="item">
                 <div class='info'>
                     <?php if ($ar[4] == 'Завершен') {?>
-                    <a href="/~s338923/isbd/rate.php?id=<?= $ar[0]?>">Оценить заказ</a>
+                    <a href="rate.php?id=<?= $ar[0]?>">Оценить заказ</a>
                     <?php }?>
                     <p>Заказ №<?= $ar[0]?> Статус - <?= $ar[4]?></p>
                     <p>Тип техники: <?= $ar[6]?></p>
