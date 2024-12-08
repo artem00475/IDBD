@@ -103,4 +103,18 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         }
         return $arWorker;
     }
+
+    function getByDate(string $date): array
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT get_masters(:date)');
+        $req->bindValue(':date',$_GET['date']);
+        $req->execute();
+        $table = [];
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $obj['get_masters'] = trim($obj['get_masters'], '()');
+            $ar = explode(",",$obj['get_masters']);
+            $table[] = [$ar[0]];
+        }
+        return $table;
+    }
 }

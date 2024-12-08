@@ -20,7 +20,7 @@ class OrderHandlerImpl implements OrderHandler
             $order->setId($ar[0]);
             $order->setContent($ar[1]);
             $order->setPayment($ar[2]);
-            $order->setDate($ar[3]);
+            $order->setDate(date('d.m.Y', strtotime($ar[3])));
             $order->setStatus($ar[4]);
             $order->setMaster($ar[5]);
             $order->setTechnique($ar[6]);
@@ -42,12 +42,109 @@ class OrderHandlerImpl implements OrderHandler
             $order->setId($ar[0]);
             $order->setContent($ar[1]);
             $order->setPayment($ar[2]);
-            $order->setDate($ar[3]);
+            $order->setDate(date('d.m.Y', strtotime($ar[3])));
             $order->setStatus($ar[4]);
             $order->setMaster($ar[5]);
             $order->setTechnique($ar[6]);
             $arOrder[$ar[0]] = $order;
         }
         return $arOrder;
+    }
+
+    function getNewByMaster(int $masterId): array
+    {
+        $arOrder = [];
+        $req = DBPostgres::getConnection()->prepare('SELECT get_master_new_orders(:user_id)');
+        $req->bindValue(':user_id', $masterId);
+        $req->execute();
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $obj['get_master_new_orders'] = trim($obj['get_master_new_orders'], '()');
+            $ar = explode(",", $obj['get_master_new_orders']);
+            $order = new Order();
+            $order->setId($ar[0]);
+            $order->setContent($ar[1]);
+            $order->setCost($ar[2]);
+            $order->setDate(date('d.m.Y', strtotime($ar[3])));
+            $order->setStatus($ar[4]);
+            $order->setClient($ar[6]);
+            $order->setTechnique($ar[5]);
+            $arOrder[$ar[0]] = $order;
+        }
+        return $arOrder;
+    }
+
+    function getCurrentByMaster(int $masterId): array
+    {
+        $arOrder = [];
+        $req = DBPostgres::getConnection()->prepare('SELECT get_master_current_orders(:user_id)');
+        $req->bindValue(':user_id', $_COOKIE['USER_ID']);
+        $req->execute();
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $obj['get_master_current_orders'] = trim($obj['get_master_current_orders'], '()');
+            $ar = explode(",", $obj['get_master_current_orders']);
+            $order = new Order();
+            $order->setId($ar[0]);
+            $order->setContent($ar[1]);
+            $order->setCost($ar[2]);
+            $order->setDate(date('d.m.Y', strtotime($ar[3])));
+            $order->setStatus($ar[4]);
+            $order->setClient($ar[6]);
+            $order->setTechnique($ar[5]);
+            $arOrder[$ar[0]] = $order;
+        }
+        return $arOrder;
+    }
+
+    function getHistoryByMaster(int $masterId): array
+    {
+        $arOrder = [];
+        $req = DBPostgres::getConnection()->prepare('SELECT get_master_order_history(:user_id)');
+        $req->bindValue(':user_id', $_COOKIE['USER_ID']);
+        $req->execute();
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $obj['get_master_order_history'] = trim($obj['get_master_order_history'], '()');
+            $ar = explode(",", $obj['get_master_order_history']);
+            $order = new Order();
+            $order->setId($ar[0]);
+            $order->setContent($ar[1]);
+            $order->setCost($ar[2]);
+            $order->setDate(date('d.m.Y', strtotime($ar[3])));
+            $order->setStatus($ar[4]);
+            $order->setClient($ar[6]);
+            $order->setTechnique($ar[5]);
+            $arOrder[$ar[0]] = $order;
+        }
+        return $arOrder;
+    }
+
+    function accept(int $masterId, int $orderId): void
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT accept_order(:order_id,:master_id)');
+        $req->bindValue(':master_id', $masterId);
+        $req->bindValue(':order_id', $orderId);
+        $req->execute();
+    }
+
+    function reject(int $masterId, int $orderId): void
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT reject_order(:order_id,:master_id)');
+        $req->bindValue(':master_id', $masterId);
+        $req->bindValue(':order_id', $orderId);
+        $req->execute();
+    }
+
+    function cancel(int $orderId): void
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT cancel_order(:order_id)');
+        $req->bindValue(':order_id', $orderId);
+        $req->execute();
+    }
+
+    function finish(int $masterId, int $orderId): void
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT finish_order(:order_id,:master_id)');
+        $req->bindValue(':master_id', $masterId);
+        $req->bindValue(':order_id', $orderId);
+        $req->execute();
     }
 }
