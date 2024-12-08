@@ -59,11 +59,11 @@ class UserHandlerImpl implements UserHandler
             $obj['get_user'] = trim($obj['get_user'], '()');
             $ar = explode(",",$obj['get_user']);
             $user = new User();
-            $user->setLogin($ar[1]);
-            $user->setName($ar[3]);
-            $user->setSurname($ar[4]);
-            $user->setEmail($ar[5]);
-            $user->setPhone($ar[6]);
+            $user->setLogin($ar[0]);
+            $user->setName($ar[1]);
+            $user->setSurname($ar[2]);
+            $user->setEmail($ar[3]);
+            $user->setPhone($ar[4]);
             return $user;
         } else {
             return null;

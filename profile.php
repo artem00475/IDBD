@@ -3,7 +3,7 @@
 include_once "header.php";?>
 <div class='main'>
 <h1>Профиль</h1>
-<?php if ($_GET['change'] == 'y'):?>
+<?php if (array_key_exists('change', $_GET) && $_GET['change'] == 'y'):?>
     <form method='POST' class='schedule-form' id='form' style="display: flex;" action="backend.php">
     <input type="text" hidden name="action_type" value="schedule">
             <div class="element">
@@ -22,34 +22,22 @@ include_once "header.php";?>
         </form>
 <?php else:?>
     <div class="list">
+        <?php
+            $master = DBPostgres::getMasterProfileHandler()->getById($_COOKIE['USER_ID']);
+            $user = DBPostgres::getUserHandler()->getById($master->getUserId());
+            $schedule = DBPostgres::getScheduleHandler()->getByMaster($_COOKIE['USER_ID']);
+            $schedule = implode(',', $schedule);
+        ?>
         <div class="item">
             <div class='photo'>
                 <img src="/~s338923/isbd/img/worker-<?=$_COOKIE['USER_ID']?>.jpg" alt="master_photo" class="avatar">
             </div>
-            <?php
-            $req = DBPostgres::getConnection()->prepare('SELECT get_master_profile(:user_id)');
-            $req->bindValue(':user_id',$_COOKIE['USER_ID']);
-            $req->execute();
-            $obj = $req->fetch(\PDO::FETCH_ASSOC);
-            $obj['get_master_profile'] = trim($obj['get_master_profile'], '()');
-            $ar = explode(",",$obj['get_master_profile']);
-        ?>
             <div class='info'>
-                <p><?=$ar[0]?> <?=$ar[1]?></p>
-                <p>Рейтинг: <?=$ar[2]?></p>
-                <p>Стаж: <?=$ar[4]?></p>
-                <p>Расписание:
-                <?php
-            $req = DBPostgres::getConnection()->prepare('SELECT get_master_schedule(:user_id)');
-            $req->bindValue(':user_id',$_COOKIE['USER_ID']);
-            $req->execute();
-            while($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
-            $obj['get_master_schedule'] = trim($obj['get_master_schedule'], '()');
-            $ar = explode(",",$obj['get_master_schedule']);?>
-                <?= $ar[1]?> 
-            <?php }?>
-        </p>
-                <a href="/~s338923/isbd/profile.php?change=y">Изменить расписание</a>
+                <p><?=$user->getName()?> <?=$user->getSurname()?></p>
+                <p>Рейтинг: <?=$master->getRating()?></p>
+                <p>Стаж: <?=$master->getExperience()?></p>
+                <p>Расписание: <?=$schedule?></p>
+                <a href="profile.php?change=y">Изменить расписание</a>
             </div>
         </div>
     </div>

@@ -292,11 +292,9 @@ $$ LANGUAGE plpgsql;
 
 
 --просмотр и редактирование своего профиля
-
-CREATE OR REPLACE FUNCTION get_master_profile(master_id INT)
+CREATE OR REPLACE FUNCTION get_master(master_id INT)
 RETURNS TABLE (
-	name VARCHAR(20),
-	surname VARCHAR(20),
+    userId integer,
 	rating REAL,
 	photo VARCHAR(50),
 	experience SMALLINT,
@@ -304,10 +302,39 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT accounts.name, accounts.surname, master.rating, master.photo, master.experience, master.qualification
+	SELECT master.userId, master.rating, master.photo, master.experience, master.qualification
 	FROM master
-	JOIN accounts ON master.userId = accounts.id
-	WHERE master.id = master_id;
+	WHERE id = master_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_user(user_id INT)
+RETURNS TABLE (
+	login varchar(20),
+    _name varchar(20),
+    surname varchar(20),
+    email varchar(30),
+    phone char(11)
+) AS $$
+BEGIN
+RETURN QUERY
+SELECT accounts.login, accounts.name, accounts.surname, accounts.email, accounts.phone
+FROM accounts
+WHERE id = user_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_client(client_id INT)
+RETURNS TABLE (
+    userId integer,
+    address varchar(30),
+    photo varchar(50)
+) AS $$
+BEGIN
+RETURN QUERY
+SELECT client.userId, client.address, client.photo
+FROM client
+WHERE id = client_id;
 END;
 $$ LANGUAGE plpgsql;
 

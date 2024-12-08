@@ -54,11 +54,11 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
             $obj['get_master'] = trim($obj['get_master'], '()');
             $ar = explode(",",$obj['get_master']);
             $master = new MasterProfile();
-            $master->setUserId($ar[1]);
-            $master->setExperience($ar[2]);
-            $master->setPhoto($ar[3]);
-            $master->setRating($ar[4]);
-            $master->setQualification($ar[5]);
+            $master->setUserId($ar[0]);
+            $master->setExperience($ar[3]);
+            $master->setPhoto($ar[2]);
+            $master->setRating($ar[1]);
+            $master->setQualification($ar[4]);
             return $master;
         } else {
             return null;
