@@ -147,4 +147,39 @@ class OrderHandlerImpl implements OrderHandler
         $req->bindValue(':order_id', $orderId);
         $req->execute();
     }
+
+    function add(Order $order): int
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT create_order(:client_id,:technique_id,:order_content,:order_cost,:date)');
+        $req->bindValue(':client_id', $order->getClient());
+        $req->bindValue(':technique_id', $order->getTechnique());
+        $req->bindValue(':order_content', $order->getContent());
+        $req->bindValue(':order_cost', $order->getCost());
+        $req->bindValue(':date', $order->getCost());
+        $req->execute();
+
+        $req = DBPostgres::getConnection()->prepare('select currval(:name)');
+        $req->bindValue(':name','s338923.orders_id_seq');
+        $req->execute();
+        $obj = $req->fetch(\PDO::FETCH_ASSOC);
+        return $obj[0];
+    }
+
+    function addWithMaster(Order $order, int $masterId): int
+    {
+        $req = DBPostgres::getConnection()->prepare('SELECT create_order_with_master(:client_id,:technique_id,:order_content,:order_cost,:date,:masterId)');
+        $req->bindValue(':client_id', $order->getClient());
+        $req->bindValue(':technique_id', $order->getTechnique());
+        $req->bindValue(':order_content', $order->getContent());
+        $req->bindValue(':order_cost', $order->getCost());
+        $req->bindValue(':date', $order->getCost());
+        $req->bindValue(':masterId',$masterId);
+        $req->execute();
+
+        $req = DBPostgres::getConnection()->prepare('select currval(:name)');
+        $req->bindValue(':name','s338923.orders_id_seq');
+        $req->execute();
+        $obj = $req->fetch(\PDO::FETCH_ASSOC);
+        return $obj[0];
+    }
 }

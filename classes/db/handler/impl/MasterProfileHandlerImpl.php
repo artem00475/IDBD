@@ -113,7 +113,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
             $obj['get_masters'] = trim($obj['get_masters'], '()');
             $ar = explode(",",$obj['get_masters']);
-            $table[] = [$ar[0]];
+            $table[] = ['id' => $ar[0], 'rating' => $ar[1]];
         }
         return $table;
     }

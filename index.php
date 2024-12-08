@@ -30,7 +30,7 @@ include_once "header.php";
                 <label for="technique">Выберите прибор</label>
                 <select  name="technique" required>
                 <?php foreach ($owners as $id => $value) {?>
-                    <option value="<?=$id?>"><?=$value['NAME']?></option>
+                    <option value="<?=$id?>"><?=$value->getTechnique()?></option>
                 <?php }?>
                 </select>
             </div>

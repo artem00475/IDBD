@@ -28,8 +28,8 @@ include_once "header.php";?>
         foreach ($arOwner as $owner) {?>
             <div class="item">
                 <div class='info'>
-                    <p>Название: <?= $owner['NAME']?></p>
-                    <p>Дата покупки: <?= $owner['DATE']?></p>
+                    <p>Название: <?= $owner->getTechnique()?></p>
+                    <p>Дата покупки: <?= $owner->getDate()?></p>
                 </div>
             </div>
         <?php }?>

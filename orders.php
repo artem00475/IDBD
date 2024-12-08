@@ -11,6 +11,9 @@ if (array_key_exists('action', $_GET) && array_key_exists('id', $_GET)) {
 
         try {
             $table = DBPostgres::getMasterProfileHandler()->getByDate($_GET['date']);
+            foreach ($table as &$item) {
+                $item = $item['id'];
+            }
             $index = array_search($_COOKIE['USER_ID'], $table);
             if ($index == count($table)-1) {
                 DBPostgres::getOrderHandler()->cancel($_GET['id']);
