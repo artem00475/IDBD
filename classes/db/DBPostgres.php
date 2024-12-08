@@ -49,8 +49,8 @@ class DBPostgres extends DB
         ";user=" .
         ";password=" ;
 
-    private static PDO $db_connect;
-    static function connect()
+    private static ?PDO $db_connect = null;
+    static function connect(): void
     {
         try {
             self::$db_connect = new PDO(self::$dsn);
