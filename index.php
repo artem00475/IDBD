@@ -31,7 +31,7 @@ include_once "db.php";
                 <label for="technique">Выберите прибор</label>
                 <select  name="technique" required>
                 <?php foreach ($owners as $id => $value) {?>
-                    <option value="<?=$id?>"><?=$value?></option>
+                    <option value="<?=$id?>"><?=$value['NAME']?></option>
                 <?php }?>
                 </select>
             </div>

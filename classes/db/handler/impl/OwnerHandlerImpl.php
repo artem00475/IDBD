@@ -16,7 +16,10 @@ class OwnerHandlerImpl implements OwnerHandler
         while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $obj['get_owners'] = trim($obj['get_owners'], '()');
             $ar = explode(",", $obj['get_owners']);
-            $arOwners[$ar[0]] = $ar[2];
+            $arOwners[$ar[0]] = [
+                'NAME' => $ar[2],
+                'DATE' => $ar[1]
+            ];
         }
         return $arOwners;
     }
