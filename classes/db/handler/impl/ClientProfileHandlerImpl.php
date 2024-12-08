@@ -2,8 +2,9 @@
 
 namespace classes\db\handler\impl;
 use classes\db\DBPostgres;
-use classes\db\entity\Entity;
+use classes\db\entity\ClientProfile;
 use classes\db\handler\ClientProfileHandler;
+use PDO;
 
 class ClientProfileHandlerImpl implements ClientProfileHandler
 {
@@ -11,14 +12,9 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
     function authorize(int $userId): int
     {
         $stmt = DBPostgres::getConnection()->prepare('SELECT check_client(:user)');
-
-        // bind value to the :id parameter
         $stmt->bindValue(':user', $userId);
-        // execute the statement
         $stmt->execute();
-
-        // return the result set as an object
-        $obj = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($obj['check_client']) {
             $obj['check_client'] = trim($obj['check_client'], '()');
@@ -29,23 +25,59 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
         }
     }
 
-    function add(Entity $object): int
+    function add(ClientProfile $client): int
     {
-        // TODO: Implement add() method.
+        $stmt = DBPostgres::getConnection()->prepare('SELECT create_client(:userId, :address, :photo)');
+        $stmt->bindValue(':userId', $client->getUserId());
+        $stmt->bindValue(':address', $client->getAddress());
+        $stmt->bindValue(':photo', $client->getPhoto());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($obj['create_client']) {
+            $obj['create_client'] = trim($obj['create_client'], '()');
+            $ar = explode(",",$obj['create_client']);
+            return $ar[0];
+        } else {
+            return 0;
+        }
     }
 
-    function update(int $id, Entity $object): bool
+    function getById(int $id): ClientProfile|null
     {
-        // TODO: Implement update() method.
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_client(:id)');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($obj['get_client']) {
+            $obj['get_client'] = trim($obj['get_client'], '()');
+            $ar = explode(",",$obj['get_client']);
+            $client = new ClientProfile();
+            $client->setUserId($ar[1]);
+            $client->setAddress($ar[2]);
+            $client->setPhoto($ar[3]);
+            return $client;
+        } else {
+            return null;
+        }
     }
 
-    function getById(int $id): Entity
+    function update(int $id, ClientProfile $clientProfile): bool
     {
-        // TODO: Implement getById() method.
-    }
+        $stmt = DBPostgres::getConnection()->prepare('SELECT update_client(:id, :userId, :address, :photo)');
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':userId', $clientProfile->getUserId());
+        $stmt->bindValue(':address', $clientProfile->getAddress());
+        $stmt->bindValue(':photo', $clientProfile->getPhoto());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    function get(int $offset = 0, int $limit = 10): array
-    {
-        // TODO: Implement get() method.
+        if ($obj['update_client']) {
+            $obj['update_client'] = trim($obj['update_client'], '()');
+            $ar = explode(",",$obj['update_client']);
+            return $ar[0];
+        } else {
+            return 0;
+        }
     }
 }

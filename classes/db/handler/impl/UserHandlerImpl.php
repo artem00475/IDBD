@@ -1,44 +1,82 @@
 <?php
 namespace classes\db\handler\impl;
 use classes\db\DBPostgres;
-use classes\db\entity\Entity;
+use classes\db\entity\User;
 use classes\db\handler\UserHandler;
+use PDO;
 
 class UserHandlerImpl implements UserHandler
 {
 
-    function add(Entity $object): int
+    function add(User $object): int
     {
-        // TODO: Implement add() method.
+        $stmt = DBPostgres::getConnection()->prepare('SELECT create_user(:login, :password, :name, :surname, :email, :phone)');
+        $stmt->bindValue(':login', $object->getLogin());
+        $stmt->bindValue(':password', $object->getPassword());
+        $stmt->bindValue(':name', $object->getName());
+        $stmt->bindValue(':surname', $object->getSurname());
+        $stmt->bindValue(':email', $object->getEmail());
+        $stmt->bindValue(':phone', $object->getPhone());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($obj['create_user']) {
+            $obj['create_user'] = trim($obj['create_user'], '()');
+            $ar = explode(",",$obj['create_user']);
+            return $ar[0];
+        } else {
+            return 0;
+        }
     }
 
-    function update(int $id, Entity $object): bool
+    function update(int $id, User $object): bool
     {
-        // TODO: Implement update() method.
+        $stmt = DBPostgres::getConnection()->prepare('SELECT update_user(:id, :login, :password, :name, :surname, :email, :phone)');
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':login', $object->getLogin());
+        $stmt->bindValue(':password', $object->getPassword());
+        $stmt->bindValue(':name', $object->getName());
+        $stmt->bindValue(':surname', $object->getSurname());
+        $stmt->bindValue(':email', $object->getEmail());
+        $stmt->bindValue(':phone', $object->getPhone());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($obj['update_user']) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    function getById(int $id): Entity
+    function getById(int $id): User|null
     {
-        // TODO: Implement getById() method.
-    }
-
-    function get(int $offset = 0, int $limit = 10): array
-    {
-        // TODO: Implement get() method.
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_user(:id)');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($obj['get_user']) {
+            $obj['get_user'] = trim($obj['get_user'], '()');
+            $ar = explode(",",$obj['get_user']);
+            $user = new User();
+            $user->setLogin($ar[1]);
+            $user->setName($ar[3]);
+            $user->setSurname($ar[4]);
+            $user->setEmail($ar[5]);
+            $user->setPhone($ar[6]);
+            return $user;
+        } else {
+            return null;
+        }
     }
 
     function authorize(string $login, string $password): int
     {
         $stmt = DBPostgres::getConnection()->prepare('SELECT check_password(:login, :password)');
-
-        // bind value to the :id parameter
         $stmt->bindValue(':login', $login);
         $stmt->bindValue(':password', $password);
-        // execute the statement
         $stmt->execute();
-
-        // return the result set as an object
-        $obj = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($obj['check_password']) {
             $obj['check_password'] = trim($obj['check_password'], '()');

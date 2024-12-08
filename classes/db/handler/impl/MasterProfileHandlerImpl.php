@@ -1,47 +1,85 @@
 <?php
 namespace classes\db\handler\impl;
 use classes\db\DBPostgres;
-use classes\db\entity\Entity;
+use classes\db\entity\MasterProfile;
 use classes\db\handler\MasterProfileHandler;
+use PDO;
 
 class MasterProfileHandlerImpl implements MasterProfileHandler
 {
 
-    function add(Entity $object): int
-    {
-        // TODO: Implement add() method.
-    }
-
-    function update(int $id, Entity $object): bool
-    {
-        // TODO: Implement update() method.
-    }
-
-    function getById(int $id): Entity
-    {
-        // TODO: Implement getById() method.
-    }
-
-    function get(int $offset = 0, int $limit = 10): array
-    {
-        // TODO: Implement get() method.
-    }
-
     function authorize(int $userId): int
     {
         $stmt = DBPostgres::getConnection()->prepare('SELECT check_master(:user)');
-
-        // bind value to the :id parameter
         $stmt->bindValue(':user', $userId);
-        // execute the statement
         $stmt->execute();
-
-        // return the result set as an object
-        $obj = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($obj['check_master']) {
             $obj['check_master'] = trim($obj['check_master'], '()');
             $ar = explode(",",$obj['check_master']);
+            return $ar[0];
+        } else {
+            return 0;
+        }
+    }
+
+    function add(MasterProfile $masterProfile): int
+    {
+        $stmt = DBPostgres::getConnection()->prepare('SELECT create_master(:userId, :experience, :photo, :rating, :qualification)');
+        $stmt->bindValue(':userId', $masterProfile->getUserId());
+        $stmt->bindValue(':experience', $masterProfile->getExperience());
+        $stmt->bindValue(':photo', $masterProfile->getPhoto());
+        $stmt->bindValue(':rating', $masterProfile->getRating());
+        $stmt->bindValue(':qualification', $masterProfile->getQualification());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($obj['create_master']) {
+            $obj['create_master'] = trim($obj['create_master'], '()');
+            $ar = explode(",",$obj['create_master']);
+            return $ar[0];
+        } else {
+            return 0;
+        }
+    }
+
+    function getById(int $id): MasterProfile|null
+    {
+        $stmt = DBPostgres::getConnection()->prepare('SELECT get_master(:id)');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($obj['get_master']) {
+            $obj['get_master'] = trim($obj['get_master'], '()');
+            $ar = explode(",",$obj['get_master']);
+            $master = new MasterProfile();
+            $master->setUserId($ar[1]);
+            $master->setExperience($ar[2]);
+            $master->setPhoto($ar[3]);
+            $master->setRating($ar[4]);
+            $master->setQualification($ar[5]);
+            return $master;
+        } else {
+            return null;
+        }
+    }
+
+    function update(int $id, MasterProfile $masterProfile): bool
+    {
+        $stmt = DBPostgres::getConnection()->prepare('SELECT update_master(:id, :userId, :experience, :photo, :rating, :qualification)');
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':userId', $masterProfile->getUserId());
+        $stmt->bindValue(':experience', $masterProfile->getExperience());
+        $stmt->bindValue(':photo', $masterProfile->getPhoto());
+        $stmt->bindValue(':rating', $masterProfile->getRating());
+        $stmt->bindValue(':qualification', $masterProfile->getQualification());
+        $stmt->execute();
+        $obj = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($obj['update_master']) {
+            $obj['update_master'] = trim($obj['update_master'], '()');
+            $ar = explode(",", $obj['update_master']);
             return $ar[0];
         } else {
             return 0;
