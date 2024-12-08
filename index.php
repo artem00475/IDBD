@@ -16,7 +16,7 @@ include_once "db.php";
         $stmt->execute();
         ?>
         <form method='POST' class='save-order-form' id='form' action="backend.php" <?php if(array_key_exists('masterId', $_GET)):?>style="display: flex;"<?php endif?>>
-            <?php if($_GET['masterId']) {?>
+            <?php if(array_key_exists('masterId', $_GET)) {?>
                 <input type="text" hidden name="action_type" value="create_order_master">
                 <input type="text" hidden name="masterId" value="<?=$_GET['masterId']?>">
             <?php }else {?>
