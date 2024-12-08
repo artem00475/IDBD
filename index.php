@@ -3,7 +3,6 @@
 use classes\db\DBPostgres;
 
 include_once "header.php";
-include_once "db.php";
 ?>
 <div class='main'>
     <h1>Заказы</h1>

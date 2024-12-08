@@ -1,8 +1,8 @@
 <?php
 include_once "db.php";
-    if (!$_COOKIE["USER_ID"] || !$_COOKIE["ROLE"]) {
-        header('Location: https://se.ifmo.ru/~s338923/isbd/auth.php');
-    }
+if (!$_COOKIE["USER_ID"] || !$_COOKIE["ROLE"]) {
+    header('Location: https://se.ifmo.ru/~s338923/isbd/auth.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
