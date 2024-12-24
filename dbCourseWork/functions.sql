@@ -189,14 +189,14 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, orders.cost, orders.date, orderStatus.name, technique.name, concat(human.surname,' ',human.name)
+	SELECT orders.id, orders.content, orders.cost, orders.date, orderStatus.name, technique.name, concat(accounts.surname,' ',accounts.name)
 	FROM newOrders 
 	JOIN orders ON orders.id = newOrders.orderId
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
 	JOIN technique on orders.techniqueId = technique.id
 	JOIN client on orders.clientId = client.id
-	JOIN human on client.humanId = human.id
+	JOIN accounts on client.userId = accounts.id
 	WHERE newOrders.masterId = master_id;
 END;
 $$ LANGUAGE plpgsql;
@@ -217,14 +217,14 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, orders.cost, orders.date, orderStatus.name, technique.name, concat(human.surname,' ',human.name)
+	SELECT orders.id, orders.content, orders.cost, orders.date, orderStatus.name, technique.name, concat(accounts.surname,' ',accounts.name)
 	FROM orders
 	JOIN masterLog ON orders.id = masterLog.orderId
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
 	JOIN technique on orders.techniqueId = technique.id
 	JOIN client on orders.clientId = client.id
-	JOIN human on client.humanId = human.id
+	JOIN accounts on client.userId = accounts.id
 	WHERE masterLog.masterId = master_id AND masterLog.endDate IS NULL;
 END;
 $$ LANGUAGE plpgsql;
@@ -244,7 +244,7 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, orders.cost, orders.date, feedback.rating, orderStatus.name, technique.name, concat(human.surname,' ',human.name)
+	SELECT orders.id, orders.content, orders.cost, orders.date, feedback.rating, orderStatus.name, technique.name, concat(accounts.surname,' ',accounts.name)
 	FROM orders
 	JOIN masterLog ON orders.id = masterLog.orderId
 	LEFT JOIN feedback ON orders.clientId = feedback.clientId
@@ -252,7 +252,7 @@ BEGIN
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
 	JOIN technique on orders.techniqueId = technique.id
 	JOIN client on orders.clientId = client.id
-	JOIN human on client.humanId = human.id
+	JOIN accounts on client.userId = accounts.id
 	WHERE masterLog.masterId = master_id AND masterLog.endDate IS NOT NULL;
 END;
 $$ LANGUAGE plpgsql;
@@ -292,11 +292,9 @@ $$ LANGUAGE plpgsql;
 
 
 --просмотр и редактирование своего профиля
-
-CREATE OR REPLACE FUNCTION get_master_profile(master_id INT)
+CREATE OR REPLACE FUNCTION get_master(master_id INT)
 RETURNS TABLE (
-	name VARCHAR(20),
-	surname VARCHAR(20),
+    userId integer,
 	rating REAL,
 	photo VARCHAR(50),
 	experience SMALLINT,
@@ -304,10 +302,39 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT human.name, human.surname, master.rating, master.photo, master.experience, master.qualification
+	SELECT master.userId, master.rating, master.photo, master.experience, master.qualification
 	FROM master
-	JOIN human ON master.humanId = human.id
-	WHERE master.id = master_id;
+	WHERE id = master_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_user(user_id INT)
+RETURNS TABLE (
+	login varchar(20),
+    _name varchar(20),
+    surname varchar(20),
+    email varchar(30),
+    phone char(11)
+) AS $$
+BEGIN
+RETURN QUERY
+SELECT accounts.login, accounts.name, accounts.surname, accounts.email, accounts.phone
+FROM accounts
+WHERE id = user_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_client(client_id INT)
+RETURNS TABLE (
+    userId integer,
+    address varchar(30),
+    photo varchar(50)
+) AS $$
+BEGIN
+RETURN QUERY
+SELECT client.userId, client.address, client.photo
+FROM client
+WHERE id = client_id;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -315,14 +342,14 @@ CREATE OR REPLACE FUNCTION change_profile(master_id INT,name_ TEXT, surname_ TEX
 RETURNS VOID AS $$
 BEGIN
 	IF name_ IS NOT NULL THEN
-	UPDATE human
+	UPDATE accounts
 	SET name = _name
-	where id in (select humanId from master where id = master_id);
+	where id in (select userId from master where id = master_id);
 	END IF;
 IF surname_ IS NOT NULL THEN
-	UPDATE human
+	UPDATE accounts
 	SET surname = surname_ 
-	where id in (select humanId from master where id = master_id);
+	where id in (select userId from master where id = master_id);
 	END IF;
 IF experience_ IS NOT NULL THEN
 	UPDATE master
@@ -337,30 +364,131 @@ IF qualification_ IS NOT NULL THEN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION create_user(login_ TEXT,password_ TEXT, name_ TEXT, surname_ TEXT, email_ TEXT, phone_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+	ret RECORD;
+BEGIN
+	INSERT INTO accounts(login, password, name, surname, email, phone)
+    VALUES (login_, password_, name_, surname_, email_, phone_);
+    SELECT id into ret FROM accounts WHERE login = login_;
+    RETURN RET;
+    EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_user(user_ INT, login_ TEXT,password_ TEXT, name_ TEXT, surname_ TEXT, email_ TEXT, phone_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE accounts
+SET login = login_ and password=password_ and name=name_ and surname=surname_ and email=email_ and phone=phone_
+WHERE id=user_;
+SELECT id into ret FROM accounts WHERE login = login_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_client(user_ INT,address_ TEXT, photo_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+    INSERT INTO client(userId, address, photo)
+    VALUES (user_, address_, photo_);
+    SELECT id into ret FROM client WHERE userId = user_;
+    RETURN RET;
+    EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_client(id_ INT, user_ INT,address_ TEXT, photo_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE client
+SET userId=user_ and address=address_ and photo=photo_
+WHERE id=id_;
+SELECT id into ret FROM client WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_master(user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+INSERT INTO master(userId, rating, photo, experience, qualification)
+VALUES (user_, rating_, photo_, experience_, qualification_);
+SELECT id into ret FROM master WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_master(id_ INT, user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE master
+SET userId=user_ and rating=rating_ and photo=photo_ and experience=experience_ and qualification=qualification_
+WHERE id=id_;
+SELECT id into ret FROM master WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION check_password(
     in_username VARCHAR(255),
     in_password VARCHAR(255)
 ) RETURNS RECORD AS $$
 DECLARE
     hashed_password VARCHAR(255);
-	client_id integer;
-	master_id integer;
 	ret RECORD;
 BEGIN
     -- Получаем хэшированный пароль для данного логина
-    SELECT client.id into client_id
+    SELECT id into ret
     FROM accounts
-JOIN human on human.userid = accounts.id
-JOIN client on human.id = client.humanid
     WHERE login = in_username and password = in_password;
-    SELECT master.id into master_id
-    FROM accounts
-JOIN human on human.userid = accounts.id
-JOIN master on human.id = master.humanid
-    WHERE login = in_username and password = in_password;
-IF client_id IS NOT NULL THEN SELECT client_id, 'Client' into ret;
-ELSEIF master_id IS NOT NULL THEN SELECT master_id, 'Master' into ret;
-END IF;
+RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_client(
+    in_user integer
+) RETURNS RECORD AS $$
+DECLARE
+	ret RECORD;
+BEGIN
+    SELECT id into ret
+    FROM clients
+    WHERE userId = in_user;
+RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_master(
+    in_user integer
+) RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+SELECT id into ret
+FROM masters
+WHERE userId = in_user;
 RETURN RET;
 END;
 $$ LANGUAGE plpgsql;
@@ -377,14 +505,14 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(human.surname,' ',human.name), technique.name
+	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(accounts.name,' ', accounts.surname), technique.name
 	FROM orders
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
 	JOIN technique on orders.techniqueId = technique.id
 	LEFT JOIN masterLog on orders.id = masterLog.orderId and masterLog.masterStatusId = 1
 	LEFT JOIN master on masterLog.masterId = master.id
-	LEFT JOIN human on master.humanId = human.id
+	LEFT JOIN accounts on master.userId = accounts.id
 	WHERE orders.clientId = client_id and orders.orderstatusId < 3;
 END;
 $$ LANGUAGE plpgsql;
@@ -401,14 +529,14 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
 	RETURN QUERY
-	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(human.surname,' ',human.name), technique.name
+	SELECT orders.id, orders.content, paymentType.name, orders.date, orderStatus.name, concat(accounts.name,' ', accounts.surname), technique.name
 	FROM orders
 	JOIN paymentType on orders.paymentTypeId = paymentType.id
 	JOIN orderStatus on orders.orderStatusId = orderStatus.id
 	JOIN technique on orders.techniqueId = technique.id
 	LEFT JOIN masterLog on orders.id = masterLog.orderId and masterLog.masterStatusId = 2
 	LEFT JOIN master on masterLog.masterId = master.id
-	LEFT JOIN human on master.humanId = human.id
+	LEFT JOIN accounts on master.userId = accounts.id
 	WHERE orders.clientId = client_id and orders.orderstatusId > 2;
 END;
 $$ LANGUAGE plpgsql;
@@ -463,13 +591,14 @@ RETURNS TABLE (
   w_name TEXT,
   w_rating real,
   w_experience smallint,
-  w_id int
+  w_id int,
+  w_qualification varchar(100)
 )AS
 $$
 BEGIN
   RETURN QUERY
-  select master.photo, concat(human.name,' ', human.surname), master.rating, master.experience, master.id from master
-  join human on  human.id=master.humanId;
+  select master.photo, concat(accounts.name,' ', accounts.surname), master.rating, master.experience, master.id, master.qualification from master
+  join accounts on  accounts.id=master.userId;
   END;
 $$ LANGUAGE plpgsql;
 

@@ -1,20 +1,18 @@
-<?php 
+<?php
+
+use classes\db\DBPostgres;
+
 include_once "header.php";
-include_once "db.php";
-global $db_connect;
 ?>
 <div class='main'>
     <h1>Заказы</h1>
     <div class="btn_block">
-        <button class="btn" onclick="showForm(this)" <?php if($_GET['masterId']):?>style="display: none;"<?php endif?>>Создать заказ</button>
-        <?php $stmt = $db_connect->prepare('SELECT get_owners(:user)');
-
-        $stmt->bindValue(':user', $_COOKIE['USER_ID']);
-        // execute the statement
-        $stmt->execute();
+        <button class="btn" onclick="showForm(this)" <?php if(array_key_exists('masterId', $_GET)):?>style="display: none;"<?php endif?>>Создать заказ</button>
+        <?php
+            $owners = DBPostgres::getOwnerHandler()->getByClient($_COOKIE['USER_ID']);
         ?>
-        <form method='POST' class='save-order-form' id='form' action="backend.php" <?php if($_GET['masterId']):?>style="display: flex;"<?php endif?>>
-            <?php if($_GET['masterId']) {?>
+        <form method='POST' class='save-order-form' id='form' action="backend.php" <?php if(array_key_exists('masterId', $_GET)):?>style="display: flex;"<?php endif?>>
+            <?php if(array_key_exists('masterId', $_GET)) {?>
                 <input type="text" hidden name="action_type" value="create_order_master">
                 <input type="text" hidden name="masterId" value="<?=$_GET['masterId']?>">
             <?php }else {?>
@@ -31,11 +29,8 @@ global $db_connect;
             <div class="element">
                 <label for="technique">Выберите прибор</label>
                 <select  name="technique" required>
-                <?php while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                    $obj['get_owners'] = trim($obj['get_owners'], '()');
-                    $ar = explode(",",$obj['get_owners']);
-                    ?>
-                    <option value="<?=$ar[0]?>"><?=$ar[2]?></option>
+                <?php foreach ($owners as $id => $value) {?>
+                    <option value="<?=$id?>"><?=$value->getTechnique()?></option>
                 <?php }?>
                 </select>
             </div>
@@ -45,33 +40,16 @@ global $db_connect;
     <h2>Активные заказы</h2>
     <div class="list">
         <?php
-        // id заказа
-        // статус заказа
-        // тип техники(название)
-        // дата ремонта
-        // мастер
-        // оплата
-        // комментарий
-        $stmt = $db_connect->prepare('SELECT get_client_current_orders(:user)');
-
-        $stmt->bindValue(':user', $_COOKIE['USER_ID']);
-        // execute the statement
-        $stmt->execute();
-
-        // return the result set as an object
-        while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $obj['get_client_current_orders'] = trim($obj['get_client_current_orders'], '()');
-            $ar = explode(",",$obj['get_client_current_orders']);
-            // var_dump($ar);
-            ?>
+        $currentOrders = DBPostgres::getOrderHandler()->getCurrentByClient($_COOKIE['USER_ID']);
+        foreach ($currentOrders as $order) {?>
             <div class="item">
                 <div class='info'>
-                    <p>Заказ №<?= $ar[0]?> Статус - <?= $ar[4]?></p>
-                    <p>Тип техники: <?= $ar[6]?></p>
-                    <p>Дата ремонта: <?= $ar[3]?></p>
-                    <p>Мастер: <?= $ar[5]?></p>
-                    <p>Оплата: <?= $ar[2]?></p>
-                    <p>Комментарий: <?= $ar[1]?></p>
+                    <p>Заказ №<?= $order->getId();?> Статус - <?= $order->getStatus();?></p>
+                    <p>Тип техники: <?= $order->getTechnique();?></p>
+                    <p>Дата ремонта: <?= $order->getDate();?></p>
+                    <p>Мастер: <?= $order->getMaster();?></p>
+                    <p>Оплата: <?= $order->getPayment();?></p>
+                    <p>Комментарий: <?= $order->getContent();?></p>
                 </div>
             </div>
         <?php }?>
@@ -79,36 +57,19 @@ global $db_connect;
     <h2>История заказов</h2>
     <div class="list">
         <?php
-        // id заказа
-        // статус заказа
-        // тип техники(название)
-        // дата ремонта
-        // мастер
-        // оплата
-        // комментарий
-        $stmt = $db_connect->prepare('SELECT get_client_history_orders(:user)');
-
-        $stmt->bindValue(':user', $_COOKIE['USER_ID']);
-        // execute the statement
-        $stmt->execute();
-
-        // return the result set as an object
-        while ($obj = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $obj['get_client_history_orders'] = trim($obj['get_client_history_orders'], '()');
-            $ar = explode(",",$obj['get_client_history_orders']);
-            // var_dump($ar);
-            ?>
+        $oldOrders = DBPostgres::getOrderHandler()->getHistoryByClient($_COOKIE['USER_ID']);
+        foreach ($oldOrders as $order) {?>
             <div class="item">
                 <div class='info'>
-                    <?php if ($ar[4] == 'Завершен') {?>
-                    <a href="/~s338923/isbd/rate.php?id=<?= $ar[0]?>">Оценить заказ</a>
+                    <?php if ($order->getStatus() == 'Завершен') {?>
+                        <a href="rate.php?id=<?= $order->getId()?>">Оценить заказ</a>
                     <?php }?>
-                    <p>Заказ №<?= $ar[0]?> Статус - <?= $ar[4]?></p>
-                    <p>Тип техники: <?= $ar[6]?></p>
-                    <p>Дата ремонта: <?= $ar[3]?></p>
-                    <p>Мастер: <?= $ar[5]?></p>
-                    <p>Оплата: <?= $ar[2]?></p>
-                    <p>Комментарий: <?= $ar[1]?></p>
+                    <p>Заказ №<?= $order->getId();?> Статус - <?= $order->getStatus();?></p>
+                    <p>Тип техники: <?= $order->getTechnique();?></p>
+                    <p>Дата ремонта: <?= $order->getDate();?></p>
+                    <p>Мастер: <?= $order->getMaster();?></p>
+                    <p>Оплата: <?= $order->getPayment();?></p>
+                    <p>Комментарий: <?= $order->getContent();?></p>
                 </div>
             </div>
         <?php }?>

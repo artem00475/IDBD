@@ -16,5 +16,4 @@ delete from qa;
 delete from schedule;
 delete from day;
 delete from master;
-delete from human;
 delete from accounts;

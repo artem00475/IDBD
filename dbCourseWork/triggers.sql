@@ -184,7 +184,7 @@ CREATE OR REPLACE FUNCTION masterLog_before_delete() RETURNS trigger AS $masterL
 	IF OLD.masterStatusId != 3 THEN
 		RAISE EXCEPTION 'Log with that status unavailable to delete.';
 	END IF;
-	select active into masterA from accounts where id in (select userId from human where id in (select humanId from master where id = OLD.masterId));
+	select active into masterA from accounts where id in (select userId from master where id = OLD.masterId);
 	IF masterA THEN
 		RAISE EXCEPTION 'User is still active.';
 	END IF;
@@ -202,11 +202,11 @@ CREATE OR REPLACE FUNCTION feedback_before_delete() RETURNS trigger AS $feedback
 	masterA boolean;
 	clientA boolean;
     BEGIN
-	select active into masterA from accounts where id in (select userId from human where id in (select humanId from master where id = OLD.masterId));
+	select active into masterA from accounts where id in (select userId from master where id = OLD.masterId);
 	IF masterA THEN
 		RAISE EXCEPTION 'Master is still active.';
 	END IF;
-	select active into clientA from accounts where id in (select userId from human where id in (select humanId from client where id = OLD.clientId));
+	select active into clientA from accounts where id in (select userId from client where id = OLD.clientId);
 	IF clientA THEN
 		RAISE EXCEPTION 'Client is still active.';
 	END IF;
