@@ -107,7 +107,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
     function getByDate(string $date): array
     {
         $req = DBPostgres::getConnection()->prepare('SELECT get_masters(:date)');
-        $req->bindValue(':date',$_GET['date']);
+        $req->bindValue(':date',$date);
         $req->execute();
         $table = [];
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {

@@ -155,14 +155,14 @@ class OrderHandlerImpl implements OrderHandler
         $req->bindValue(':technique_id', $order->getTechnique());
         $req->bindValue(':order_content', $order->getContent());
         $req->bindValue(':order_cost', $order->getCost());
-        $req->bindValue(':date', $order->getCost());
+        $req->bindValue(':date', $order->getDate());
         $req->execute();
 
         $req = DBPostgres::getConnection()->prepare('select currval(:name)');
         $req->bindValue(':name','s338923.orders_id_seq');
         $req->execute();
         $obj = $req->fetch(\PDO::FETCH_ASSOC);
-        return $obj[0];
+        return $obj['currval'];
     }
 
     function addWithMaster(Order $order, int $masterId): int
@@ -172,7 +172,7 @@ class OrderHandlerImpl implements OrderHandler
         $req->bindValue(':technique_id', $order->getTechnique());
         $req->bindValue(':order_content', $order->getContent());
         $req->bindValue(':order_cost', $order->getCost());
-        $req->bindValue(':date', $order->getCost());
+        $req->bindValue(':date', $order->getDate());
         $req->bindValue(':masterId',$masterId);
         $req->execute();
 
@@ -180,6 +180,6 @@ class OrderHandlerImpl implements OrderHandler
         $req->bindValue(':name','s338923.orders_id_seq');
         $req->execute();
         $obj = $req->fetch(\PDO::FETCH_ASSOC);
-        return $obj[0];
+        return $obj['currval'];
     }
 }

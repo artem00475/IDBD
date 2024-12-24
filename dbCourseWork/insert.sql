@@ -65,9 +65,9 @@ insert into owner (techniqueId ,clientId ,  buyDate ) values
 
 
 insert into subscriber (planId ,clientId ,startDate , finishDate) values
-(1, 1,'24.03.2019','24.09.2019'),
-(2, 2, '04.11.2021','04.05.2022'),
-(3, 3, '14.10.2019','14.04.2020');
+(1, 1,'24.03.2025','24.09.2025'),
+(2, 2, '04.11.2025','04.12.2025'),
+(3, 3, '14.10.2025','14.11.2025');
 
 insert into orderStatus (name) values
 ('В поиске мастера'),
