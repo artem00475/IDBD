@@ -364,6 +364,93 @@ IF qualification_ IS NOT NULL THEN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION create_user(login_ TEXT,password_ TEXT, name_ TEXT, surname_ TEXT, email_ TEXT, phone_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+	ret RECORD;
+BEGIN
+	INSERT INTO accounts(login, password, name, surname, email, phone)
+    VALUES (login_, password_, name_, surname_, email_, phone_);
+    SELECT id into ret FROM accounts WHERE login = login_;
+    RETURN RET;
+    EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_user(user_ INT, login_ TEXT,password_ TEXT, name_ TEXT, surname_ TEXT, email_ TEXT, phone_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE accounts
+SET login = login_ and password=password_ and name=name_ and surname=surname_ and email=email_ and phone=phone_
+WHERE id=user_;
+SELECT id into ret FROM accounts WHERE login = login_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_client(user_ INT,address_ TEXT, photo_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+    INSERT INTO client(userId, address, photo)
+    VALUES (user_, address_, photo_);
+    SELECT id into ret FROM client WHERE userId = user_;
+    RETURN RET;
+    EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_client(id_ INT, user_ INT,address_ TEXT, photo_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE client
+SET userId=user_ and address=address_ and photo=photo_
+WHERE id=id_;
+SELECT id into ret FROM client WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_master(user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+INSERT INTO master(userId, rating, photo, experience, qualification)
+VALUES (user_, rating_, photo_, experience_, qualification_);
+SELECT id into ret FROM master WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_master(id_ INT, user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+RETURNS RECORD AS $$
+DECLARE
+ret RECORD;
+BEGIN
+UPDATE master
+SET userId=user_ and rating=rating_ and photo=photo_ and experience=experience_ and qualification=qualification_
+WHERE id=id_;
+SELECT id into ret FROM master WHERE userId = user_;
+RETURN RET;
+EXCEPTION WHEN OTHERS
+    THEN RETURN RET;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION check_password(
     in_username VARCHAR(255),
     in_password VARCHAR(255)
