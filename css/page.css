@@ -1,5 +1,19 @@
 .main {
     /* width: 1920px; */
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mains {
+    /* width: 1920px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mais {
+    /* width: 1920px; */
     display: flex;
     flex-direction: column;
     align-items: center;

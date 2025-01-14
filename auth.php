@@ -33,8 +33,8 @@
                 include_once "db.php";
                 if ($userId = DBPostgres::getUserHandler()->authorize($_POST['username'], $_POST['password'])) {
                     setcookie("USER_ID", $userId);
-                    setcookie("ROLE", "Client");
-                    $page = "Client" ? 'index' : 'orders';
+                    // setcookie("ROLE", "Client");
+                    $page = 'role';
                     header('Location: https://se.ifmo.ru/~s338923/isbd/'. $page .'.php');
                 } else {
                     echo "Неправильный логин или пароль";
@@ -50,8 +50,9 @@
         <div class="form-group">
             <input class="form-control item" type="password" name="password" minlength="1" id="password" placeholder="Пароль" required>
         </div>
-        <div class="form-group">
+        <div class="form-group btns">
             <button class="btn btn-primary btn-block create-account" type="submit">Вход в аккаунт</button>
+            <a href="register.php" class="btn btn-primary btn-block create-new-account">Создать аккаунт</a>
         </div>
     </form>
 </div>
