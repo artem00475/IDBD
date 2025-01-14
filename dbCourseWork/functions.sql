@@ -474,7 +474,7 @@ DECLARE
 	ret RECORD;
 BEGIN
     SELECT id into ret
-    FROM clients
+    FROM client
     WHERE userId = in_user;
 RETURN RET;
 END;
@@ -487,7 +487,7 @@ DECLARE
 ret RECORD;
 BEGIN
 SELECT id into ret
-FROM masters
+FROM master
 WHERE userId = in_user;
 RETURN RET;
 END;
