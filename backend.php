@@ -12,7 +12,7 @@ switch ($_POST["action_type"]) {
             $table = DBPostgres::getMasterProfileHandler()->getByDate($date);
             if (count($table) > 0) {
                 $order = new Order();
-                $order->setClient($_COOKIE['USER_ID']);
+                $order->setClient($_COOKIE['PROFILE_ID']);
                 $order->setTechnique($technique);
                 $order->setContent($comment);
                 $order->setCost(1000);
@@ -33,10 +33,10 @@ switch ($_POST["action_type"]) {
         $date = $_POST["date"];
         $comment = $_POST["comment"];
         $technique = $_POST["technique"];
-        
+
         try {
             $order = new Order();
-            $order->setClient($_COOKIE['USER_ID']);
+            $order->setClient($_COOKIE['PROFILE_ID']);
             $order->setTechnique($technique);
             $order->setContent($comment);
             $order->setCost(1000);
@@ -54,8 +54,8 @@ switch ($_POST["action_type"]) {
         $rating = $_POST["rating"];
         try {
             $feedback = new \classes\db\entity\Feedback();
-            $feedback->setOrderId($_COOKIE['USER_ID']);
-            $feedback->setClientId($order);
+            $feedback->setOrderId($order);
+            $feedback->setClientId($_COOKIE['PROFILE_ID']);
             $feedback->setContent($comment);
             $feedback->setRating($rating);
             DBPostgres::getFeedbackHandler()->add($feedback);
@@ -70,7 +70,7 @@ switch ($_POST["action_type"]) {
         $technique = $_POST["technique"];
         try {
             $tech = new \classes\db\entity\Technique();
-            $tech->setClientId($_COOKIE['USER_ID']);
+            $tech->setClientId($_COOKIE['PROFILE_ID']);
             $tech->setDate($date);
             $tech->setTechnique($technique);
             DBPostgres::getOwnerHandler()->add($tech);
@@ -86,7 +86,7 @@ switch ($_POST["action_type"]) {
         $plan_id = $_POST["technique"];
         try {
             $sub = new \classes\db\entity\Subscription();
-            $sub->setClient($_COOKIE['USER_ID']);
+            $sub->setClient($_COOKIE['PROFILE_ID']);
             $sub->setPlan($plan_id);
             $sub->setStartDate($start_date);
             $sub->setFinishDate($finish_date);
@@ -102,7 +102,7 @@ switch ($_POST["action_type"]) {
         $comment = $_POST["comment"];
         try {
             $request = new \classes\db\entity\SupportRequest();
-            $request->setClientId($_COOKIE['USER_ID']);
+            $request->setClientId($_COOKIE['PROFILE_ID']);
             $request->setTheme($theme);
             $request->setContent($theme);
             DBPostgres::getSupportRequestHandler()->add($request);

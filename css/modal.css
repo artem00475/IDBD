@@ -1,5 +1,5 @@
 #form {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -14,14 +14,3 @@
     justify-content: space-between;
     margin: 10px;
 }
-
-
-.element input[type="file"] {
-    display:none;
-  }
-  .element input[type="file"] + label {
-    display:block;
-    background: #eee;
-    padding: 5px 10px;
-    display: inline
-  }
