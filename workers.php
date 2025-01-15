@@ -17,7 +17,7 @@ include_once "header.php";
                 <div class="item">
                     <div class='info'>
                         <div class='photo'>
-                            <img src="/~s338923/isbd/img/worker-<?= $id ?>.jpg" alt="master_photo" class="avatar">
+                            <img src="/~s338923/isbd/<?= $worker['PHOTO']; ?>" alt="master_photo" class="avatar">
                         </div>
                         <p><?= $worker['NAME']; ?></p>
                         <p>Рейтинг: <?= $worker['RATE']; ?></p>

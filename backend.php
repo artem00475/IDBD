@@ -117,7 +117,7 @@ switch ($_POST["action_type"]) {
         $days = $_POST["days"];
         print_r($_POST);
         try {
-            DBPostgres::getScheduleHandler()->updateByMaster($_COOKIE['USER_ID'], $days);
+            DBPostgres::getScheduleHandler()->updateByMaster($_COOKIE['PROFILE_ID'], $days);
         } catch (Error $e) {
             echo $e->getMessage();
         }

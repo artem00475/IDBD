@@ -39,6 +39,7 @@ if (!$_COOKIE["USER_ID"]) {
             <?php elseif ($_COOKIE["ROLE"] == "Master"): ?>
                 <a href="orders.php" <?php if ($url == "/~s338923/isbd/orders.php"): ?>class="active"<?php endif ?>>Заказы
                     мастера</a>
+                <a href="profile.php" <?php if ($url == "/~s338923/isbd/profile.php"): ?>class="active"<?php endif ?>>Расписание</a>
             <?php endif ?>
             <a href="my_profile.php">Ваш профиль</a>
         <?php endif ?>
