@@ -384,7 +384,7 @@ DECLARE
 ret RECORD;
 BEGIN
 UPDATE accounts
-SET login = login_ and password=password_ and name=name_ and surname=surname_ and email=email_ and phone=phone_
+SET login = login_, password=password_, name=name_, surname=surname_, email=email_, phone=phone_
 WHERE id=user_;
 SELECT id into ret FROM accounts WHERE login = login_;
 RETURN RET;
@@ -413,7 +413,7 @@ DECLARE
 ret RECORD;
 BEGIN
 UPDATE client
-SET userId=user_ and address=address_ and photo=photo_
+SET userId=user_, address=address_, photo=photo_
 WHERE id=id_;
 SELECT id into ret FROM client WHERE userId = user_;
 RETURN RET;
@@ -422,7 +422,7 @@ EXCEPTION WHEN OTHERS
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION create_master(user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+CREATE OR REPLACE FUNCTION create_master(user_ INT,experience_ smallint, photo_ TEXT, rating_ real, qualification_ TEXT)
 RETURNS RECORD AS $$
 DECLARE
 ret RECORD;
@@ -436,13 +436,13 @@ EXCEPTION WHEN OTHERS
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION update_master(id_ INT, user_ INT,experience_ TEXT, photo_ TEXT, rating_ TEXT, qualification_ TEXT)
+CREATE OR REPLACE FUNCTION update_master(id_ INT, user_ INT,experience_ smallint, photo_ TEXT, rating_ real, qualification_ TEXT)
 RETURNS RECORD AS $$
 DECLARE
 ret RECORD;
 BEGIN
 UPDATE master
-SET userId=user_ and rating=rating_ and photo=photo_ and experience=experience_ and qualification=qualification_
+SET userId=user_, rating=rating_, photo=photo_, experience=experience_, qualification=qualification_
 WHERE id=id_;
 SELECT id into ret FROM master WHERE userId = user_;
 RETURN RET;

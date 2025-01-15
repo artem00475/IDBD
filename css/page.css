@@ -4,6 +4,12 @@
     flex-direction: column;
     align-items: center;
 }
+
+#form.profile-form {
+    display: flex;
+    width: fit-content;
+}
+
 .list {
     display: flex;
     flex-wrap: wrap;
