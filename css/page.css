@@ -3,7 +3,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
+
+#form.profile-form {
+    display: flex;
+    width: fit-content;
+}
+
 .list {
     display: flex;
     flex-wrap: wrap;

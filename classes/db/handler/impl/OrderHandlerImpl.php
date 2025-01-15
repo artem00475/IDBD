@@ -1,5 +1,7 @@
 <?php
+
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\entity\Order;
 use classes\db\handler\OrderHandler;
@@ -11,7 +13,7 @@ class OrderHandlerImpl implements OrderHandler
     {
         $arOrder = [];
         $stmt = DBPostgres::getConnection()->prepare('SELECT get_client_current_orders(:user)');
-        $stmt->bindValue(':user', $_COOKIE['USER_ID']);
+        $stmt->bindValue(':user', $clientId);
         $stmt->execute();
         while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $obj['get_client_current_orders'] = trim($obj['get_client_current_orders'], '()');
@@ -33,7 +35,7 @@ class OrderHandlerImpl implements OrderHandler
     {
         $arOrder = [];
         $stmt = DBPostgres::getConnection()->prepare('SELECT get_client_history_orders(:user)');
-        $stmt->bindValue(':user', $_COOKIE['USER_ID']);
+        $stmt->bindValue(':user', $clientId);
         $stmt->execute();
         while ($obj = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $obj['get_client_history_orders'] = trim($obj['get_client_history_orders'], '()');
@@ -77,7 +79,7 @@ class OrderHandlerImpl implements OrderHandler
     {
         $arOrder = [];
         $req = DBPostgres::getConnection()->prepare('SELECT get_master_current_orders(:user_id)');
-        $req->bindValue(':user_id', $_COOKIE['USER_ID']);
+        $req->bindValue(':user_id', $masterId);
         $req->execute();
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
             $obj['get_master_current_orders'] = trim($obj['get_master_current_orders'], '()');
@@ -99,7 +101,7 @@ class OrderHandlerImpl implements OrderHandler
     {
         $arOrder = [];
         $req = DBPostgres::getConnection()->prepare('SELECT get_master_order_history(:user_id)');
-        $req->bindValue(':user_id', $_COOKIE['USER_ID']);
+        $req->bindValue(':user_id', $masterId);
         $req->execute();
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
             $obj['get_master_order_history'] = trim($obj['get_master_order_history'], '()');
@@ -159,7 +161,7 @@ class OrderHandlerImpl implements OrderHandler
         $req->execute();
 
         $req = DBPostgres::getConnection()->prepare('select currval(:name)');
-        $req->bindValue(':name','s338923.orders_id_seq');
+        $req->bindValue(':name', 's338923.orders_id_seq');
         $req->execute();
         $obj = $req->fetch(\PDO::FETCH_ASSOC);
         return $obj['currval'];
@@ -173,11 +175,11 @@ class OrderHandlerImpl implements OrderHandler
         $req->bindValue(':order_content', $order->getContent());
         $req->bindValue(':order_cost', $order->getCost());
         $req->bindValue(':date', $order->getDate());
-        $req->bindValue(':masterId',$masterId);
+        $req->bindValue(':masterId', $masterId);
         $req->execute();
 
         $req = DBPostgres::getConnection()->prepare('select currval(:name)');
-        $req->bindValue(':name','s338923.orders_id_seq');
+        $req->bindValue(':name', 's338923.orders_id_seq');
         $req->execute();
         $obj = $req->fetch(\PDO::FETCH_ASSOC);
         return $obj['currval'];

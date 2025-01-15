@@ -24,7 +24,7 @@ include_once "header.php";?>
     <h2>Ваши приборы</h2>
     <div class="list">
         <?php
-        $arOwner = DBPostgres::getOwnerHandler()->getByClient($_COOKIE['USER_ID']);
+        $arOwner = DBPostgres::getOwnerHandler()->getByClient($_COOKIE['PROFILE_ID']);
         foreach ($arOwner as $owner) {?>
             <div class="item">
                 <div class='info'>
