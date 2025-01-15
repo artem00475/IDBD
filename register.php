@@ -18,8 +18,8 @@
             $user->setPassword($_POST['password']);
             $user->setName($_POST['name']);
             $user->setSurname($_POST['surname']);
-            $user->setPhone($_POST['email']);
-            $user->setEmail($_POST['phone']);
+            $user->setEmail($_POST['email']);
+            $user->setPhone($_POST['phone']);
 
             $userId = DBPostgres::getUserHandler()->add($user);
             echo $userId ? 'Пользователь создан. Воспользуйтесь формой для входа в аккаунт' : 'Пользователь уже существует';
@@ -31,19 +31,19 @@
             <input class="form-control item" type="text" name="username" maxlength="20" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="username" placeholder="Логин" required>
         </div>
         <div class="form-group">
-            <input class="form-control item" type="password" name="password" minlength="8" id="password" placeholder="Пароль" required>
+            <input class="form-control item" type="password" name="password" minlength="8" maxlength="50" id="password" placeholder="Пароль" required>
         </div>
         <div class="form-group">
             <input class="form-control item" type="text" name="name" maxlength="20" minlength="1" pattern="^[a-zA-Z0-9_.-]*$" id="name" placeholder="Имя" required>
         </div>
         <div class="form-group">
-            <input class="form-control item" type="text" name="surname" minlength="1" id="surname" placeholder="Фамилия" required>
+            <input class="form-control item" type="text" name="surname" maxlength="20" id="surname" placeholder="Фамилия" required>
         </div>
         <div class="form-group">
-            <input class="form-control item" type="text" name="email" maxlength="20" minlength="1" pattern="^[a-zA-Z0-9_.-]*$" id="email" placeholder="Почта" required>
+            <input class="form-control item" type="text" name="email" maxlength="30" minlength="1" pattern="^[a-zA-Z0-9_.-]*$" id="email" placeholder="Почта" required>
         </div>
         <div class="form-group">
-            <input class="form-control item" type="text" name="phone" minlength="1" id="phone" placeholder="Телефон" required>
+            <input class="form-control item" type="text" name="phone" maxlength="11" id="phone" placeholder="Телефон" required>
         </div>
         <div class="form-group btns">
             <button class="btn btn-primary btn-block create-account" type="submit">Зарегистрироваться</button>
