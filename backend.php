@@ -170,7 +170,7 @@ switch ($_POST["action_type"]) {
             $master->setExperience($experience);
             $master->setQualification($qualification);
             $master->setPhoto($photo);
-            $masterId = DBPostgres::getMasterProfileHandler()->update($_COOKIE['PROFILE_ID'], $master);
+            DBPostgres::getMasterProfileHandler()->update($_COOKIE['PROFILE_ID'], $master);
         } catch (Error $e) {
             echo $e->getMessage();
         }
@@ -184,7 +184,29 @@ switch ($_POST["action_type"]) {
         try {
             $client->setAddress($address);
             $client->setPhoto($photo);
-            $clientId = DBPostgres::getClientProfileHandler()->update($_COOKIE['PROFILE_ID'], $client);
+            DBPostgres::getClientProfileHandler()->update($_COOKIE['PROFILE_ID'], $client);
+        } catch (Error $e) {
+            echo $e->getMessage();
+        }
+        header('Location: https://se.ifmo.ru/~s338923/isbd/my_profile.php');
+        break;
+
+    case 'update_user':
+        $user = DBPostgres::getUserHandler()->getById($_COOKIE['USER_ID']);
+        $login = $_POST["login"] ?: $user->getLogin();
+        $name = $_POST["name"] ?: $user->getName();
+        $surname = $_POST["surname"] ?: $user->getSurname();
+        $email = $_POST["email"] ?: $user->getEmail();
+        $phone = $_POST["phone"] ?: $user->getPhone();
+        $password = $_POST["password"] ?: $user->getPassword();
+        try {
+            $user->setLogin($login);
+            $user->setName($name);
+            $user->setSurname($surname);
+            $user->setEmail($email);
+            $user->setPhone($phone);
+            $user->setPassword($password);
+            DBPostgres::getUserHandler()->update($_COOKIE['USER_ID'], $user);
         } catch (Error $e) {
             echo $e->getMessage();
         }

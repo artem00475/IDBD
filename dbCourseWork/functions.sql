@@ -314,11 +314,12 @@ RETURNS TABLE (
     _name varchar(20),
     surname varchar(20),
     email varchar(30),
-    phone char(11)
+    phone char(11),
+    password varchar(50)
 ) AS $$
 BEGIN
 RETURN QUERY
-SELECT accounts.login, accounts.name, accounts.surname, accounts.email, accounts.phone
+SELECT accounts.login, accounts.name, accounts.surname, accounts.email, accounts.phone, accounts.password
 FROM accounts
 WHERE id = user_id;
 END;
