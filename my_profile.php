@@ -60,7 +60,7 @@ $profileId = $_COOKIE["PROFILE_ID"] ?? 0; ?>
             $photo = '/~s338923/isbd' . $master->getPhoto();
             ?>
             <div class="btn_block">
-                <form action="backend.php" id='form' class="profile-form" method="post">
+                <form action="backend.php" id='form' class="profile-form" method="post" enctype="multipart/form-data">
                     <input type="text" hidden name="action_type" value="update_master">
                     <div class="element">
                         <label for="experience">Опыт</label>
@@ -78,7 +78,8 @@ $profileId = $_COOKIE["PROFILE_ID"] ?? 0; ?>
                         <img src="<?= $photo; ?>" alt="" class="photo">
                     </div>
                     <div class="element">
-                        <input class="form-control item" type="file" name="photo" id="photo" placeholder="Фото">
+                        <input class="form-control item" type="file" name="photo" accept="image/*" id="photo"
+                               placeholder="Фото">
                         <label for="photo">Выбрать фото</label>
                     </div>
                     <input type="submit" class='btn' value="Сохранить">
@@ -90,7 +91,7 @@ $profileId = $_COOKIE["PROFILE_ID"] ?? 0; ?>
             $photo = '/~s338923/isbd' . $client->getPhoto();
             ?>
             <div class="btn_block">
-                <form action="backend.php" id='form' class="profile-form" method="post">
+                <form action="backend.php" id='form' class="profile-form" method="post" enctype="multipart/form-data">
                     <input type="text" hidden name="action_type" value="update_client">
                     <div class="element">
                         <label for="address">Адрес</label>
@@ -102,7 +103,8 @@ $profileId = $_COOKIE["PROFILE_ID"] ?? 0; ?>
                         <img src="<?= $photo; ?>" alt="" class="photo">
                     </div>
                     <div class="element">
-                        <input class="form-control item" type="file" name="photo" id="photo" placeholder="Фото">
+                        <input class="form-control item" type="file" name="photo" accept="image/*" id="photo"
+                               placeholder="Фото">
                         <label for="photo">Выбрать фото</label>
                     </div>
                     <input type="submit" class='btn' value="Сохранить">

@@ -1,7 +1,39 @@
 <?php
 
 use classes\db\DBPostgres;
+use classes\db\entity\ClientProfile;
+use classes\db\entity\Feedback;
+use classes\db\entity\MasterProfile;
 use classes\db\entity\Order;
+use classes\db\entity\Subscription;
+use classes\db\entity\SupportRequest;
+use classes\db\entity\Technique;
+
+function getImagePath(): string
+{
+    $upload_file = '';
+    if ($_FILES['photo'] && $_FILES['photo']['name']) {
+        $file_name = $_FILES['photo']['name'];
+        $file_tmp = $_FILES['photo']['tmp_name'];
+        $file_md5 = md5_file($file_tmp, true);
+        $md5_base64 = base64_encode($file_md5);
+        $root = '/home/studs/s338923/public_html/isbd';
+        $upload_dir = '/upload/' . $md5_base64[0] . '/' . $md5_base64[1] . '/' . substr($md5_base64, 2) . '/';
+        if (!is_dir($root . $upload_dir)) {
+            mkdir($root . $upload_dir, 0777, true);
+        }
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        $new_file_name = uniqid() . '.' . $file_ext;
+        $upload_file = $root . $upload_dir . $new_file_name;
+        if (!move_uploaded_file($file_tmp, $upload_file)) {
+            echo "Ошибка при загрузке файла.";
+            header('Location: https://se.ifmo.ru/~s338923/isbd/my_profile.php');
+            return $upload_file;
+        }
+        $upload_file = $upload_dir . $new_file_name;
+    }
+    return $upload_file;
+}
 
 include_once "db.php";
 switch ($_POST["action_type"]) {
@@ -54,7 +86,7 @@ switch ($_POST["action_type"]) {
         $comment = $_POST["comment"];
         $rating = $_POST["rating"];
         try {
-            $feedback = new \classes\db\entity\Feedback();
+            $feedback = new Feedback();
             $feedback->setOrderId($order);
             $feedback->setClientId($_COOKIE['PROFILE_ID']);
             $feedback->setContent($comment);
@@ -70,7 +102,7 @@ switch ($_POST["action_type"]) {
         $date = $_POST["date"];
         $technique = $_POST["technique"];
         try {
-            $tech = new \classes\db\entity\Technique();
+            $tech = new Technique();
             $tech->setClientId($_COOKIE['PROFILE_ID']);
             $tech->setDate($date);
             $tech->setTechnique($technique);
@@ -86,7 +118,7 @@ switch ($_POST["action_type"]) {
         $finish_date = $_POST["finish_date"];
         $plan_id = $_POST["technique"];
         try {
-            $sub = new \classes\db\entity\Subscription();
+            $sub = new Subscription();
             $sub->setClient($_COOKIE['PROFILE_ID']);
             $sub->setPlan($plan_id);
             $sub->setStartDate($start_date);
@@ -102,7 +134,7 @@ switch ($_POST["action_type"]) {
         $theme = $_POST["theme"];
         $comment = $_POST["comment"];
         try {
-            $request = new \classes\db\entity\SupportRequest();
+            $request = new SupportRequest();
             $request->setClientId($_COOKIE['PROFILE_ID']);
             $request->setTheme($theme);
             $request->setContent($theme);
@@ -127,9 +159,9 @@ switch ($_POST["action_type"]) {
     case 'create_master':
         $experience = $_POST["experience"] ?: 0;
         $qualification = $_POST["qualification"] ?: '';
-        $photo = $_POST["photo"] ?: '/upload/no-avatar.png';
+        $photo = getImagePath() ?: '/upload/no-avatar.png';
         try {
-            $master = new \classes\db\entity\MasterProfile();
+            $master = new MasterProfile();
             $master->setExperience($experience);
             $master->setQualification($qualification);
             $master->setUserId($_COOKIE['USER_ID']);
@@ -146,9 +178,9 @@ switch ($_POST["action_type"]) {
 
     case 'create_client':
         $address = $_POST["address"] ?: '';
-        $photo = $_POST["photo"] ?: '/upload/no-avatar.png';
+        $photo = getImagePath() ?: '/upload/no-avatar.png';
         try {
-            $client = new \classes\db\entity\ClientProfile();
+            $client = new ClientProfile();
             $client->setAddress($address);
             $client->setUserId($_COOKIE['USER_ID']);
             $client->setPhoto($photo);
@@ -165,7 +197,7 @@ switch ($_POST["action_type"]) {
         $master = DBPostgres::getMasterProfileHandler()->getById($_COOKIE['PROFILE_ID']);
         $experience = $_POST["experience"] ?: $master->getExperience();
         $qualification = $_POST["qualification"] ?: $master->getQualification();
-        $photo = $_POST["photo"] ?: $master->getPhoto();
+        $photo = getImagePath() ?: $master->getPhoto();
         try {
             $master->setExperience($experience);
             $master->setQualification($qualification);
@@ -180,7 +212,7 @@ switch ($_POST["action_type"]) {
     case 'update_client':
         $client = DBPostgres::getClientProfileHandler()->getById($_COOKIE['PROFILE_ID']);
         $address = $_POST["address"] ?: $client->getAddress();
-        $photo = $_POST["photo"] ?: $client->getPhoto();
+        $photo = getImagePath() ?: $client->getPhoto();
         try {
             $client->setAddress($address);
             $client->setPhoto($photo);

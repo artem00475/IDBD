@@ -296,7 +296,7 @@ CREATE OR REPLACE FUNCTION get_master(master_id INT)
 RETURNS TABLE (
     userId integer,
 	rating REAL,
-	photo VARCHAR(50),
+	photo text,
 	experience SMALLINT,
 	qualification VARCHAR(100)
 ) AS $$
@@ -329,7 +329,7 @@ CREATE OR REPLACE FUNCTION get_client(client_id INT)
 RETURNS TABLE (
     userId integer,
     address varchar(30),
-    photo varchar(50)
+    photo text
 ) AS $$
 BEGIN
 RETURN QUERY
@@ -588,7 +588,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION findall_workers()
 RETURNS TABLE (
-  w_photo varchar(50),
+  w_photo text,
   w_name TEXT,
   w_rating real,
   w_experience smallint,

@@ -12,7 +12,7 @@ create table master (
 	id serial primary key,
 	userId integer not null references accounts(id),
 	rating real default 0,
-	photo varchar(50) unique,
+	photo text unique,
 	experience smallint not null,
 	qualification varchar(100) not null,
 	check(rating >= 0 and rating <= 5 and experience >= 0)
@@ -54,7 +54,7 @@ create table client(
 	id serial primary key,
 	userId integer references accounts(id),
     address varchar(30) not null,
-    photo varchar(50) unique
+    photo text unique
 );
 create table owner(
 	techniqueId integer references technique(id),
