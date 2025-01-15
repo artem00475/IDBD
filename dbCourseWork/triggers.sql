@@ -2,7 +2,6 @@
 CREATE OR REPLACE FUNCTION master_insert() RETURNS trigger AS $master_insert$
     BEGIN
 	NEW.rating = 0;
-	NEW.photo = concat('/include/photos/',NEW.id,'.jpg');
         RETURN NEW;
     END;
 $master_insert$ LANGUAGE plpgsql;

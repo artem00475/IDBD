@@ -64,6 +64,7 @@ class UserHandlerImpl implements UserHandler
             $user->setSurname($ar[2]);
             $user->setEmail($ar[3]);
             $user->setPhone($ar[4]);
+            $user->setPassword($ar[5]);
             return $user;
         } else {
             return null;

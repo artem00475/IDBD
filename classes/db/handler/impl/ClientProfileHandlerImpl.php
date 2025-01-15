@@ -53,9 +53,9 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
             $obj['get_client'] = trim($obj['get_client'], '()');
             $ar = explode(",",$obj['get_client']);
             $client = new ClientProfile();
-            $client->setUserId($ar[1]);
-            $client->setAddress($ar[2]);
-            $client->setPhoto($ar[3]);
+            $client->setUserId($ar[0]);
+            $client->setAddress($ar[1]);
+            $client->setPhoto($ar[2]);
             return $client;
         } else {
             return null;

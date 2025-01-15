@@ -2,7 +2,7 @@
 
 include_once "header.php";?>
 <div class='main'>
-<h1>Профиль</h1>
+<h1>Профиль на доске мастеров</h1>
 <?php if (array_key_exists('change', $_GET) && $_GET['change'] == 'y'):?>
     <form method='POST' class='schedule-form' id='form' style="display: flex;" action="backend.php">
     <input type="text" hidden name="action_type" value="schedule">
@@ -23,14 +23,14 @@ include_once "header.php";?>
 <?php else:?>
     <div class="list">
         <?php
-            $master = DBPostgres::getMasterProfileHandler()->getById($_COOKIE['USER_ID']);
+            $master = DBPostgres::getMasterProfileHandler()->getById($_COOKIE['PROFILE_ID']);
             $user = DBPostgres::getUserHandler()->getById($master->getUserId());
-            $schedule = DBPostgres::getScheduleHandler()->getByMaster($_COOKIE['USER_ID']);
+            $schedule = DBPostgres::getScheduleHandler()->getByMaster($_COOKIE['PROFILE_ID']);
             $schedule = implode(',', $schedule);
         ?>
         <div class="item">
             <div class='photo'>
-                <img src="/~s338923/isbd/img/worker-<?=$_COOKIE['USER_ID']?>.jpg" alt="master_photo" class="avatar">
+                <img src="/~s338923/isbd/<?=$master->getPhoto()?>" alt="master_photo" class="avatar">
             </div>
             <div class='info'>
                 <p><?=$user->getName()?> <?=$user->getSurname()?></p>
