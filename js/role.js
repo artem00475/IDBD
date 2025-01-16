@@ -5,7 +5,7 @@ function getCookie(name) {
 }
 
 function sendRole(role) {
-    fetch('role.php', {
+    fetch('/~s338923/isbd/profile/selection/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -21,7 +21,7 @@ function sendRole(role) {
         })
         .finally(() => {
             if (getCookie('PROFILE_ID')) {
-                location.href = 'my_profile.php';
+                location.href = '/~s338923/isbd/';
             } else {
                 location.reload()
             }

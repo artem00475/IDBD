@@ -73,7 +73,8 @@ BEGIN
 	day = extract(isodow from date);
 	RETURN QUERY
 	select master.id, master.rating from master
-	join schedule on schedule.masterId = master.id and schedule.dayId = day;
+	join schedule on schedule.masterId = master.id and schedule.dayId = day
+	order by master.rating desc;
 	END;
 $$ LANGUAGE plpgsql;
 
