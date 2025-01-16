@@ -36,6 +36,7 @@ document.querySelectorAll('.bcw').forEach(button => {
 });
 
 const role = getCookie('ROLE')
+console.log(role);
 if (role === 'Client') {
     document.querySelector('.client-btn').classList.add('active');
 } else if (role === 'Master') {
