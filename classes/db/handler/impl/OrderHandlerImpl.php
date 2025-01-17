@@ -111,9 +111,9 @@ class OrderHandlerImpl implements OrderHandler
             $order->setContent($ar[1]);
             $order->setCost($ar[2]);
             $order->setDate(date('d.m.Y', strtotime($ar[3])));
-            $order->setStatus($ar[4]);
-            $order->setClient($ar[6]);
-            $order->setTechnique($ar[5]);
+            $order->setStatus($ar[5]);
+            $order->setClient($ar[7]);
+            $order->setTechnique($ar[6]);
             $arOrder[$ar[0]] = $order;
         }
         return $arOrder;

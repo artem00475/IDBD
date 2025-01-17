@@ -1,4 +1,5 @@
 <?php
+
 namespace classes\db\entity;
 class ClientProfile
 {
@@ -11,24 +12,24 @@ class ClientProfile
         return $this->userId;
     }
 
-    function getAddress(): string
-    {
-        return $this->address;
-    }
-
-    function getPhoto(): string
-    {
-        return $this->photo;
-    }
-
     function setUserId(int $id): void
     {
         $this->userId = $id;
     }
 
+    function getAddress(): string
+    {
+        return $this->address;
+    }
+
     function setAddress(string $address): void
     {
         $this->address = $address;
+    }
+
+    function getPhoto(): string
+    {
+        return $this->photo;
     }
 
     function setPhoto(string $photo): void

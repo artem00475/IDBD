@@ -1,50 +1,54 @@
-<?php
-include_once "db.php";
-if (!$_COOKIE["USER_ID"]) {
-    header('Location: https://se.ifmo.ru/~s338923/isbd/auth.php');
-}
-?>
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <title>Сервис ремонта</title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/page.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <!-- <link rel="stylesheet" href="css/auth.css"> -->
 </head>
+<style>
+    <?php include 'css/header.css'; ?>
+    <?php include 'css/page.css'; ?>
+    <?php include 'css/modal.css'; ?>
+</style>
+<script>
+    function showForm(btn) {
+        btn.style.display = 'none';
+        document.getElementById('form').style.display = 'flex';
+    }
+</script>
 <body>
 <div class="header">
-    <a class="logo">Сервис ремонта</a>
+    <a class="logo" href="<?= HOST ?>/">Сервис ремонта</a>
     <div class="header-right">
         <?php
         $url = $_SERVER['REQUEST_URI'];
         $url = explode('?', $url);
         $url = $url[0];
         ?>
-        <a href="role.php" <?php if ($url == "/~s338923/isbd/role.php"): ?>class="active"<?php endif ?>>Выбор
-            профиля</a>
-        <?php if (isset($_COOKIE["ROLE"]) && isset($_COOKIE['PROFILE_ID']) && $_COOKIE['PROFILE_ID']): ?>
-            <?php if ($_COOKIE["ROLE"] == "Client"): ?>
-                <a href="index.php"
-                   <?php if ($url == "/~s338923/isbd/index.php"): ?>class="active"<?php endif ?>>Заказы</a>
-                <a href="qa.php" <?php if ($url == "/~s338923/isbd/qa.php"): ?>class="active"<?php endif ?>>Вопросы</a>
-                <a href="subscribe.php"
-                   <?php if ($url == "/~s338923/isbd/subscribe.php"): ?>class="active"<?php endif ?>>Подписка</a>
-                <a href="workers.php" <?php if ($url == "/~s338923/isbd/workers.php"): ?>class="active"<?php endif ?>>Мастера</a>
-                <a href="add.php"
-                   <?php if ($url == "/~s338923/isbd/add.php"): ?>class="active"<?php endif ?>>Приборы</a>
-            <?php elseif ($_COOKIE["ROLE"] == "Master"): ?>
-                <a href="orders.php" <?php if ($url == "/~s338923/isbd/orders.php"): ?>class="active"<?php endif ?>>Заказы
+        <a href="<?= HOST ?>/profile/selection"
+           <?php if ($url == HOST . "/profile/selection/"): ?>class="active"<?php endif ?>>Выбор профиля</a>
+        <?php if (ROLE && PROFILE_ID): ?>
+            <?php if (ROLE == "Client"): ?>
+                <a href="<?= HOST ?>/orders"
+                   <?php if ($url == HOST . "/orders/" || $url == HOST . "/"): ?>class="active"<?php endif ?>>Заказы</a>
+                <a href="<?= HOST ?>/qa" <?php if ($url == HOST . "/qa/"): ?>class="active"<?php endif ?>>Вопросы</a>
+                <a href="<?= HOST ?>/subscribe"
+                   <?php if ($url == HOST . "/subscribe/"): ?>class="active"<?php endif ?>>Подписка</a>
+                <a href="<?= HOST ?>/workers" <?php if ($url == HOST . "/workers/"): ?>class="active"<?php endif ?>>Мастера</a>
+                <a href="<?= HOST ?>/technique"
+                   <?php if ($url == HOST . "/technique/"): ?>class="active"<?php endif ?>>Приборы</a>
+            <?php elseif (ROLE == "Master"): ?>
+                <a href="<?= HOST ?>/orders"
+                   <?php if ($url == HOST . "/orders/" || $url == HOST . "/"): ?>class="active"<?php endif ?>>Заказы
                     мастера</a>
-                <a href="profile.php" <?php if ($url == "/~s338923/isbd/profile.php"): ?>class="active"<?php endif ?>>Расписание</a>
+                <a href="<?= HOST ?>/schedule" <?php if ($url == HOST . "/schedule/"): ?>class="active"<?php endif ?>>Расписание</a>
             <?php endif ?>
-            <a href="my_profile.php">Ваш профиль</a>
+            <a href="<?= HOST ?>/profile" <?php if ($url == HOST . "/profile/"): ?>class="active"<?php endif ?>>Ваш
+                профиль</a>
         <?php endif ?>
-        <a href="auth.php?exit=y">Выход</a>
+        <a href="<?= HOST ?>/logout/">Выход</a>
     </div>
 </div>
+<div class="main">
 
 

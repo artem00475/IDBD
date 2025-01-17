@@ -16,34 +16,14 @@ class User
         return $this->login;
     }
 
-    function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    function getName(): string
-    {
-        return $this->name;
-    }
-
-    function getSurname(): string
-    {
-        return $this->surname;
-    }
-
-    function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    function getPhone(): string
-    {
-        return $this->phone;
-    }
-
     function setLogin(string $login): void
     {
         $this->login = $login;
+    }
+
+    function getPassword(): string
+    {
+        return $this->password;
     }
 
     function setPassword(string $password): void
@@ -51,9 +31,19 @@ class User
         $this->password = $password;
     }
 
+    function getName(): string
+    {
+        return $this->name;
+    }
+
     function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    function getSurname(): string
+    {
+        return $this->surname;
     }
 
     function setSurname(string $surname): void
@@ -61,9 +51,19 @@ class User
         $this->surname = $surname;
     }
 
+    function getEmail(): string
+    {
+        return $this->email;
+    }
+
     function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    function getPhone(): string
+    {
+        return $this->phone;
     }
 
     function setPhone(string $phone): void

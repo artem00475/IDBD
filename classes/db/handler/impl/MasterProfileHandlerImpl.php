@@ -1,5 +1,7 @@
 <?php
+
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\entity\MasterProfile;
 use classes\db\handler\MasterProfileHandler;
@@ -17,7 +19,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
 
         if ($obj['check_master']) {
             $obj['check_master'] = trim($obj['check_master'], '()');
-            $ar = explode(",",$obj['check_master']);
+            $ar = explode(",", $obj['check_master']);
             return $ar[0] ?: 0;
         } else {
             return 0;
@@ -37,7 +39,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
 
         if ($obj['create_master']) {
             $obj['create_master'] = trim($obj['create_master'], '()');
-            $ar = explode(",",$obj['create_master']);
+            $ar = explode(",", $obj['create_master']);
             return $ar[0] ?: 0;
         } else {
             return 0;
@@ -52,7 +54,7 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
         $obj = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($obj['get_master']) {
             $obj['get_master'] = trim($obj['get_master'], '()');
-            $ar = explode(",",$obj['get_master']);
+            $ar = explode(",", $obj['get_master']);
             $master = new MasterProfile();
             $master->setUserId($ar[0]);
             $master->setExperience($ar[3]);
@@ -107,12 +109,12 @@ class MasterProfileHandlerImpl implements MasterProfileHandler
     function getByDate(string $date): array
     {
         $req = DBPostgres::getConnection()->prepare('SELECT get_masters(:date)');
-        $req->bindValue(':date',$date);
+        $req->bindValue(':date', $date);
         $req->execute();
         $table = [];
         while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
             $obj['get_masters'] = trim($obj['get_masters'], '()');
-            $ar = explode(",",$obj['get_masters']);
+            $ar = explode(",", $obj['get_masters']);
             $table[] = ['id' => $ar[0], 'rating' => $ar[1]];
         }
         return $table;

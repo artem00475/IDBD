@@ -33,23 +33,37 @@ abstract class DB
     protected static ?SubscriberHandler $subscriberHandler = null;
     protected static ?SupportRequestHandler $supportRequestHandler = null;
     protected static ?TechniqueHandler $techniqueHandler = null;
+
     abstract static function connect();
 
     abstract static function isConnected(): bool;
 
     abstract static function getUserHandler(): UserHandler;
+
     abstract static function getClientProfileHandler(): ClientProfileHandler;
+
     abstract static function getFeedbackHandler(): FeedbackHandler;
+
     abstract static function getMasterLogsHandler(): MasterLogsHandler;
+
     abstract static function getMasterProfileHandler(): MasterProfileHandler;
+
     abstract static function getOrderHandler(): OrderHandler;
+
     abstract static function getOwnerHandler(): OwnerHandler;
+
     abstract static function getPaymentTypeHandler(): PaymentTypeHandler;
+
     abstract static function getPlanHandler(): PlanHandler;
+
     abstract static function getQAHandler(): QAHandler;
+
     abstract static function getSubscriberHandler(): SubscriberHandler;
+
     abstract static function getSupportRequestHandler(): SupportRequestHandler;
+
     abstract static function getTechniqueHandler(): TechniqueHandler;
+
     abstract static function getScheduleHandler(): ScheduleHandler;
 
 }

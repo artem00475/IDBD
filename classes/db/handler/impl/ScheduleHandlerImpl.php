@@ -15,7 +15,7 @@ class ScheduleHandlerImpl implements ScheduleHandler
         $req->bindValue(':user_id', $masterId);
         $req->execute();
 
-        while($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
+        while ($obj = $req->fetch(\PDO::FETCH_ASSOC)) {
             $obj['get_master_schedule'] = trim($obj['get_master_schedule'], '()');
             $ar = explode(",", $obj['get_master_schedule']);
             $arSchedule[] = $ar[1];

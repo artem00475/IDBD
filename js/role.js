@@ -5,12 +5,12 @@ function getCookie(name) {
 }
 
 function sendRole(role) {
-    fetch('role.php', {
+    fetch('/~s338923/isbd/controller/profile/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `ROLE=${role}`
+        body: `ROLE=${role}&action_type=profile_selection`
     })
         .then(response => response.text())
         .then(data => {
@@ -21,7 +21,7 @@ function sendRole(role) {
         })
         .finally(() => {
             if (getCookie('PROFILE_ID')) {
-                location.href = 'my_profile.php';
+                location.href = '/~s338923/isbd/';
             } else {
                 location.reload()
             }
@@ -36,6 +36,7 @@ document.querySelectorAll('.bcw').forEach(button => {
 });
 
 const role = getCookie('ROLE')
+console.log(role);
 if (role === 'Client') {
     document.querySelector('.client-btn').classList.add('active');
 } else if (role === 'Master') {
