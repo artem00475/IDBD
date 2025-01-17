@@ -2,12 +2,7 @@
 
 use classes\db\DBPostgres;
 use classes\db\entity\ClientProfile;
-use classes\db\entity\Feedback;
 use classes\db\entity\MasterProfile;
-use classes\db\entity\Order;
-use classes\db\entity\Subscription;
-use classes\db\entity\SupportRequest;
-use classes\db\entity\Technique;
 
 function getImagePath(): string
 {
@@ -36,124 +31,6 @@ function getImagePath(): string
 }
 
 switch ($_POST["action_type"]) {
-    case 'create_order':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/orders/');
-        $date = $_POST["date"];
-        $comment = $_POST["comment"];
-        $technique = $_POST["technique"];
-        try {
-            $table = DBPostgres::getMasterProfileHandler()->getByDate($date);
-            if (count($table) > 0) {
-                $order = new Order();
-                $order->setClient(PROFILE_ID);
-                $order->setTechnique($technique);
-                $order->setContent($comment);
-                $order->setCost(1000);
-                $order->setDate($date);
-                $orderId = DBPostgres::getOrderHandler()->add($order);
-                DBPostgres::getMasterLogsHandler()->addNewOrder(intval(current($table)['id']), $orderId);
-            } else { ?>
-                <script>alert('Нет свободных мастеров на эту дату')</script>
-            <?php }
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'create_order_master':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/orders/');
-        $masterId = $_POST["masterId"];
-        $date = $_POST["date"];
-        $comment = $_POST["comment"];
-        $technique = $_POST["technique"];
-
-        try {
-            $order = new Order();
-            $order->setClient(PROFILE_ID);
-            $order->setTechnique($technique);
-            $order->setContent($comment);
-            $order->setCost(1000);
-            $order->setDate($date);
-            $orderId = DBPostgres::getOrderHandler()->addWithMaster($order, $masterId);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'rate_order':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/orders/');
-        $order = $_POST["order_id"];
-        $comment = $_POST["comment"];
-        $rating = $_POST["rating"];
-        try {
-            $feedback = new Feedback();
-            $feedback->setOrderId($order);
-            $feedback->setClientId(PROFILE_ID);
-            $feedback->setContent($comment);
-            $feedback->setRating($rating);
-            DBPostgres::getFeedbackHandler()->add($feedback);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'add_technique':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/technique/');
-        $date = $_POST["date"];
-        $technique = $_POST["technique"];
-        try {
-            $tech = new Technique();
-            $tech->setClientId(PROFILE_ID);
-            $tech->setDate($date);
-            $tech->setTechnique($technique);
-            DBPostgres::getOwnerHandler()->add($tech);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'new_subscribe':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/subscribe/');
-        $start_date = $_POST["start_date"];
-        $finish_date = $_POST["finish_date"];
-        $plan_id = $_POST["technique"];
-        try {
-            $sub = new Subscription();
-            $sub->setClient(PROFILE_ID);
-            $sub->setPlan($plan_id);
-            $sub->setStartDate($start_date);
-            $sub->setFinishDate($finish_date);
-            DBPostgres::getSubscriberHandler()->add($sub);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'qa':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/qa/');
-        $theme = $_POST["theme"];
-        $comment = $_POST["comment"];
-        try {
-            $request = new SupportRequest();
-            $request->setClientId(PROFILE_ID);
-            $request->setTheme($theme);
-            $request->setContent($theme);
-            DBPostgres::getSupportRequestHandler()->add($request);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        break;
-
-    case 'schedule':
-        header('Location: https://se.ifmo.ru/~s338923/isbd/schedule/');
-        $days = $_POST["days"];
-        try {
-            DBPostgres::getScheduleHandler()->updateByMaster(PROFILE_ID, $days);
-        } catch (Error $e) {
-            echo $e->getMessage();
-        }
-        break;
-
     case 'create_master':
         $experience = $_POST["experience"] ?: 0;
         $qualification = $_POST["qualification"] ?: '';
@@ -242,5 +119,18 @@ switch ($_POST["action_type"]) {
             echo $e->getMessage();
         }
         break;
+
+    case 'profile_selection':
+        if (isset($_POST['ROLE'])) {
+            $role = $_POST['ROLE'];
+            setcookie("ROLE", $role, 0, HOST);
+            if ($role == "Master" && $profileId = DBPostgres::getMasterProfileHandler()->authorize(USER_ID)) {
+                setcookie("PROFILE_ID", $profileId, 0, HOST);
+            } elseif ($role == "Client" && $profileId = DBPostgres::getClientProfileHandler()->authorize(USER_ID)) {
+                setcookie("PROFILE_ID", $profileId, 0, HOST);
+            } else {
+                setcookie("PROFILE_ID", '', 0, HOST);
+            }
+            die();
+        }
 }
-?>

@@ -7,7 +7,7 @@ use classes\db\DBPostgres;
 <h1>Вопросы и ответы</h1>
 <div class="btn_block">
     <button class="btn" onclick="showForm(this)">Новый вопрос</button>
-    <form action="<?= HOST ?>/controller/" id='form' class="qa-form" method="post">
+    <form action="<?= HOST ?>/controller/service/" id='form' class="qa-form" method="post">
         <input type="text" hidden name="action_type" value="qa">
         <div class="element">
             <label for="theme">Тема</label>

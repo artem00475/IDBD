@@ -7,7 +7,7 @@ use classes\db\DBPostgres;
 <h1>Подписка</h1>
 <div class="btn_block">
     <button class="btn" onclick="showForm(this)">Оформить новую подписку</button>
-    <form action="<?= HOST ?>/controller/" id='form' class="subscribe-form" method="post">
+    <form action="<?= HOST ?>/controller/service/" id='form' class="subscribe-form" method="post">
         <input type="text" hidden name="action_type" value="new_subscribe">
         <div class="element">
             <label for="start_date">Дата начала подписки</label>

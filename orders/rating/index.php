@@ -1,5 +1,5 @@
 <h1>Оценка заказа</h1>
-<form method='POST' class='rate-order-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/">
+<form method='POST' class='rate-order-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/order/">
     <input type="text" hidden name="action_type" value="rate_order">
     <input type="text" hidden name="order_id" value="<?= $orderId ?>">
     <div class="element">

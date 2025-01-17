@@ -1,21 +1,3 @@
-<?php
-
-use classes\db\DBPostgres;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ROLE'])) {
-    $role = $_POST['ROLE'];
-    setcookie("ROLE", $role, 0, HOST);
-    if ($role == "Master" && $profileId = DBPostgres::getMasterProfileHandler()->authorize(USER_ID)) {
-        setcookie("PROFILE_ID", $profileId, 0, HOST);
-    } elseif ($role == "Client" && $profileId = DBPostgres::getClientProfileHandler()->authorize(USER_ID)) {
-        setcookie("PROFILE_ID", $profileId, 0, HOST);
-    } else {
-        setcookie("PROFILE_ID", '', 0, HOST);
-    }
-    die();
-}
-?>
-
 <h2>Выберете нужный профиль:</h2>
 <div class="form-group btns">
     <button class="btn bcw worker-btn">Мастер</button>

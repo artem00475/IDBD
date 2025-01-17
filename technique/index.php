@@ -5,7 +5,7 @@ use classes\db\DBPostgres;
 ?>
 
 <h1>Добавление прибора</h1>
-<form method='POST' class='rate-order-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/">
+<form method='POST' class='rate-order-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/service/">
     <input type="text" hidden name="action_type" value="add_technique">
     <div class="element">
         <label for="date">Дата покупки</label>

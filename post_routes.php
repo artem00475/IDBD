@@ -7,12 +7,8 @@ get_route('/logout', function () {
     header('Location: https://se.ifmo.ru/~s338923/isbd/login/');
 });
 
-post_route('/controller', 'controller/backend.php');
+post_route('/controller/order', 'controller/order/backend.php');
 
-post_route('/profile/selection', 'profile/selection/index.php');
+post_route('/controller/profile', 'controller/profile/backend.php');
 
-post_route('/profile/create', 'profile/create.php');
-
-post_route('/profile', 'profile/index.php');
-
-post_route('/technique', 'technique/index.php');
+post_route('/controller/service', 'controller/service/backend.php');

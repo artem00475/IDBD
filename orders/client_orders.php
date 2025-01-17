@@ -12,7 +12,7 @@ use classes\db\DBPostgres;
     <?php
     $owners = DBPostgres::getOwnerHandler()->getByClient(PROFILE_ID);
     ?>
-    <form method='POST' class='save-order-form' id='form' action="<?= HOST ?>/controller/"
+    <form method='POST' class='save-order-form' id='form' action="<?= HOST ?>/controller/order/"
           <?php if (array_key_exists('masterId', $_GET)): ?>style="display: flex;"<?php endif ?>>
         <?php if (array_key_exists('masterId', $_GET)) { ?>
             <input type="text" hidden name="action_type" value="create_order_master">
@@ -44,26 +44,13 @@ use classes\db\DBPostgres;
     <?php
     $currentOrders = DBPostgres::getOrderHandler()->getCurrentByClient(PROFILE_ID);
     foreach ($currentOrders as $order) {
-        $style = '';
         $status = $order->getStatus();
-        switch ($status) {
-            case 'Отменен':
-                $style = 'status-canceled';
-                break;
-            case 'Поиск':
-                $style = 'status-pending';
-                break;
-            case 'Завершен':
-                $style = 'status-done';
-                break;
-            default:
-                break;
-        } ?>
+        ?>
         <div class="item">
             <div class='order'>
                 <div class="order-title">
                     <p><strong>Заказ №<?= $order->getId(); ?></strong></p>
-                    <span class="status-badge <?= $style ?>"><?= $status ?></span>
+                    <span class="status-badge <?= getStatusStyle($status) ?>"><?= $status ?></span>
                 </div>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>
@@ -79,26 +66,13 @@ use classes\db\DBPostgres;
     <?php
     $oldOrders = DBPostgres::getOrderHandler()->getHistoryByClient(PROFILE_ID);
     foreach ($oldOrders as $order) {
-        $style = '';
         $status = $order->getStatus();
-        switch ($status) {
-            case 'Отменен':
-                $style = 'status-canceled';
-                break;
-            case 'Поиск':
-                $style = 'status-pending';
-                break;
-            case 'Завершен':
-                $style = 'status-done';
-                break;
-            default:
-                break;
-        } ?>
+        ?>
         <div class="item">
             <div class='order'>
                 <div class="order-title">
                     <p><strong>Заказ №<?= $order->getId(); ?></strong></p>
-                    <span class="status-badge <?= $style ?>"><?= $status ?></span>
+                    <span class="status-badge <?= getStatusStyle($status) ?>"><?= $status ?></span>
                 </div>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>

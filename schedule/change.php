@@ -1,6 +1,6 @@
 <h1>Изменение рабочего графика</h1>
 
-<form method='POST' class='schedule-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/">
+<form method='POST' class='schedule-form' id='form' style="display: flex;" action="<?= HOST ?>/controller/service/">
     <input type="text" hidden name="action_type" value="schedule">
     <div class="element">
         <label for="days[]">Выберите дни</label>

@@ -2,7 +2,7 @@
     <h1>Ваши данные</h1>
     <div class="btn_block">
         <form id='form' class="profile-form" method="post" enctype="multipart/form-data"
-              action="<?= HOST ?>/controller/">
+              action="<?= HOST ?>/controller/profile/">
             <input type="text" hidden name="action_type" value="create_master">
             <div class="element">
                 <input class="form-control item" type="number" name="experience" maxlength="16"
@@ -24,7 +24,7 @@
     <h1>Ваши данные</h1>
     <div class="btn_block">
         <form id='form' class="profile-form" method="post" enctype="multipart/form-data"
-              action="<?= HOST ?>/controller/">
+              action="<?= HOST ?>/controller/profile/">
             <input type="text" hidden name="action_type" value="create_client">
             <div class="element">
                 <input class="form-control item" type="text" name="address" maxlength="200" minlength="4"

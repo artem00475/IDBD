@@ -5,12 +5,12 @@ function getCookie(name) {
 }
 
 function sendRole(role) {
-    fetch('/~s338923/isbd/profile/selection/', {
+    fetch('/~s338923/isbd/controller/profile/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `ROLE=${role}`
+        body: `ROLE=${role}&action_type=profile_selection`
     })
         .then(response => response.text())
         .then(data => {

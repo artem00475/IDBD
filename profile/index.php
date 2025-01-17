@@ -13,7 +13,7 @@ $email = $user->getEmail();
 $phone = $user->getPhone();
 ?>
     <div class="profile-block">
-    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/">
+    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/profile/">
         <input type="text" hidden name="action_type" value="update_user">
         <div class="element">
             <label for="login">Логин</label>
@@ -53,7 +53,7 @@ $phone = $user->getPhone();
     $qualification = $master->getQualification();
     $photo = HOST . $master->getPhoto();
     ?>
-    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/"
+    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/profile/"
           enctype="multipart/form-data">
         <input type="text" hidden name="action_type" value="update_master">
         <div class="element">
@@ -74,7 +74,6 @@ $phone = $user->getPhone();
         <div class="element">
             <input class="form-control item" type="file" name="photo" accept="image/*" id="photo"
                    placeholder="Фото">
-            <!-- <label for="photo">Выбрать фото</label> -->
         </div>
         <input type="submit" class='btn' value="Сохранить">
     </form>
@@ -83,7 +82,7 @@ $phone = $user->getPhone();
     $address = $client->getAddress();
     $photo = HOST . $client->getPhoto();
     ?>
-    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/"
+    <form id='form' class="profile-form" method="post" action="<?= HOST ?>/controller/profile/"
           enctype="multipart/form-data">
         <input type="text" hidden name="action_type" value="update_client">
         <div class="element">
