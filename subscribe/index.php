@@ -11,15 +11,15 @@ use classes\db\DBPostgres;
         <input type="text" hidden name="action_type" value="new_subscribe">
         <div class="element">
             <label for="start_date">Дата начала подписки</label>
-            <input type="date" name='start_date' required>
+            <input class="form-control item" type="date" name='start_date' required>
         </div>
         <div class="element">
             <label for="finish_date">Дата окончания подписки</label>
-            <input type="date" name='finish_date' required>
+            <input class="form-control item" type="date" name='finish_date' required>
         </div>
         <div class="element">
             <label for="technique">Выберите план</label>
-            <select name="technique" required>
+            <select class="form-control item" name="technique" required>
                 <?php
                 $plans = DBPostgres::getPlanHandler()->getAll();
                 foreach ($plans as $key => $value) { ?>

@@ -1,151 +1,122 @@
-html {
-    background-blend-mode:overlay;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background-image:url(../../assets/img/image4.jpg);
-    background-repeat:no-repeat;
-    background-size:cover;
-    height:100%;
-  }
-  
-  body {
-    background-color:transparent;
-  }
-  
-  .registration-cssave{
-    padding:50px 0;
-  }
-  
-  .registration-cssave form {
-    max-width:800px;
-    padding:50px 70px;
-    border-radius:10px;
-    box-shadow:4px 4px 15px rgba(0, 0, 0, 0.2);
-    background-color:#fff;
-  }
-  
-  .registration-cssave form h3 {
-    font-weight:bold;
-    margin-bottom:30px;
-  }
-  
-  .registration-cssave .item {
-    border-radius:10px;
-    margin-bottom:25px;
-    padding:10px 20px;
-  }
-   .btns{
-    display: grid;
-    justify-content: center;
-   }
-  .registration-cssave .create-account {
-    border-radius:30px;
-    padding:10px 20px;
-    font-size:18px;
-    font-weight:bold;
-    background-color:#3f93ff;
-    border:none;
-    color:white;
-    margin-top:20px;
-  }
+/* auth.css */
 
-  .registration-cssave .create-new-account {
-    border-radius:30px;
-    padding:10px 20px;
-    font-size:18px;
-    font-weight:bold;
-    background-color:grey;
-    border:none;
-    color:white;
-    margin-top:20px;
-    text-decoration: none; 
-  }
-  
-  @media (max-width: 576px) {
-    .registration-cssave form {
-      padding:50px 20px;
-    }
-  }
-
-  html {
-    background-blend-mode: overlay;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url(../../assets/img/image4.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100%;
-}
-
+/* Общие стили */
 body {
-    background-color: transparent;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
 }
 
 .registration-cssave {
-    padding: 50px 0;
-}
-
-.registration-cssave form {
-    max-width: 800px;
-    padding: 50px 70px;
+    background: #fff;
     border-radius: 10px;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-}
-
-.registration-cssave form h3 {
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-
-.registration-cssave .item {
-    border-radius: 10px;
-    margin-bottom: 25px;
-    padding: 10px 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 450px;
     width: 100%;
-    box-sizing: border-box;
+    transition: transform 0.3s ease;
 }
 
-.registration-cssave select.item {
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 20px;
+.registration-cssave:hover {
+    transform: scale(1.02);
 }
 
-.btns {
-    display: grid;
-    justify-content: center;
+h3.text-center {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.registration-cssave .create-account {
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #3f93ff;
+/* Форма */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control.item {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    font-size: 1em;
+    color: #555;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control.item:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Кнопки */
+.form-group.btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    padding: 12px 20px;
     border: none;
-    color: white;
-    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    text-align: center;
 }
 
-.registration-cssave .create-new-account {
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: grey;
-    border: none;
-    color: white;
-    margin-top: 20px;
-    text-decoration: none;
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 576px) {
-    .registration-cssave form {
-        padding: 50px 20px;
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    background: #003d80;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+}
+
+.create-new-account {
+    margin-top: 10px;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.create-new-account:hover {
+    background: #e0e0e0;
+    border-color: #ccc;
+}
+
+/* Адаптивные стили */
+@media (max-width: 600px) {
+    .registration-cssave {
+        padding: 20px;
+    }
+
+    h3.text-center {
+        font-size: 1.6em;
+    }
+
+    .form-control.item {
+        padding: 10px 12px;
+    }
+
+    .btn {
+        padding: 10px 15px;
     }
 }

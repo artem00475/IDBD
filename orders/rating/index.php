@@ -4,11 +4,11 @@
     <input type="text" hidden name="order_id" value="<?= $orderId ?>">
     <div class="element">
         <label for="date">Рейтинг</label>
-        <input type="number" name='rating' required min="0" max="5" step="0.1">
+        <input class="form-control item" type="number" name='rating' required min="0" max="5" step="0.1">
     </div>
     <div class="element">
         <label for="comment">Комментарий</label>
-        <input type="text" name='comment' required>
+        <input class="form-control item" type="text" name='comment' required>
     </div>
     <input type="submit" class='btn' value="Сохранить">
 </form>

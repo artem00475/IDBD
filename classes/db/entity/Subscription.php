@@ -8,6 +8,7 @@ class Subscription
     private string $client;
     private string $startDate;
     private string $finishDate;
+    private int $cost;
 
     public function getCost(): int
     {
@@ -18,7 +19,6 @@ class Subscription
     {
         $this->cost = $cost;
     }
-    private int $cost;
 
     public function getPlan(): string
     {

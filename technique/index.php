@@ -9,11 +9,11 @@ use classes\db\DBPostgres;
     <input type="text" hidden name="action_type" value="add_technique">
     <div class="element">
         <label for="date">Дата покупки</label>
-        <input type="date" name='date' required>
+        <input class="form-control item" type="date" name='date' required>
     </div>
     <div class="element">
         <label for="technique">Выберите прибор</label>
-        <select name="technique" required>
+        <select class="form-control item" name="technique" required>
             <?php
             $arTechnique = DBPostgres::getTechniqueHandler()->getAll();
             foreach ($arTechnique as $key => $value) { ?>

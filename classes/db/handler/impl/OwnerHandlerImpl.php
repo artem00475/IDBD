@@ -1,5 +1,7 @@
 <?php
+
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\entity\Technique;
 use classes\db\handler\OwnerHandler;
@@ -28,8 +30,8 @@ class OwnerHandlerImpl implements OwnerHandler
     {
         $req = DBPostgres::getConnection()->prepare('SELECT add_technique(:client_id,:date,:technique)');
         $req->bindValue(':client_id', $technique->getClientId());
-        $req->bindValue(':date',$technique->getDate());
-        $req->bindValue(':technique',$technique->getTechnique());
+        $req->bindValue(':date', $technique->getDate());
+        $req->bindValue(':technique', $technique->getTechnique());
         $req->execute();
     }
 }

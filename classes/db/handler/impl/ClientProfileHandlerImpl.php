@@ -1,6 +1,7 @@
 <?php
 
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\entity\ClientProfile;
 use classes\db\handler\ClientProfileHandler;
@@ -18,7 +19,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
 
         if ($obj['check_client']) {
             $obj['check_client'] = trim($obj['check_client'], '()');
-            $ar = explode(",",$obj['check_client']);
+            $ar = explode(",", $obj['check_client']);
             return $ar[0] ?: 0;
         } else {
             return 0;
@@ -36,7 +37,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
 
         if ($obj['create_client']) {
             $obj['create_client'] = trim($obj['create_client'], '()');
-            $ar = explode(",",$obj['create_client']);
+            $ar = explode(",", $obj['create_client']);
             return $ar[0] ?: 0;
         } else {
             return 0;
@@ -51,7 +52,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
         $obj = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($obj['get_client']) {
             $obj['get_client'] = trim($obj['get_client'], '()');
-            $ar = explode(",",$obj['get_client']);
+            $ar = explode(",", $obj['get_client']);
             $client = new ClientProfile();
             $client->setUserId($ar[0]);
             $client->setAddress($ar[1]);
@@ -74,7 +75,7 @@ class ClientProfileHandlerImpl implements ClientProfileHandler
 
         if ($obj['update_client']) {
             $obj['update_client'] = trim($obj['update_client'], '()');
-            $ar = explode(",",$obj['update_client']);
+            $ar = explode(",", $obj['update_client']);
             return $ar[0] ?: 0;
         } else {
             return 0;

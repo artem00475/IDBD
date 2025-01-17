@@ -22,7 +22,7 @@ use classes\db\DBPostgres;
             <p>Рейтинг: <?= $master->getRating() ?></p>
             <p>Стаж: <?= $master->getExperience() ?></p>
             <p>Расписание: <?= $schedule ?></p>
-            <a href="<?= HOST ?>/schedule/change">Изменить расписание</a>
+            <a class="btn change-master-profile" href="<?= HOST ?>/schedule/change">Изменить расписание</a>
         </div>
     </div>
 </div>

@@ -22,4 +22,4 @@ get_route('/schedule/change', 'schedule/change.php');
 
 get_route('/technique', 'technique/index.php');
 
-any_route('/404','404.php');
+any_route('/404', '404.php');

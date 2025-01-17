@@ -22,15 +22,15 @@ use classes\db\DBPostgres;
         <?php } ?>
         <div class="element">
             <label for="date">Дата, когда приедет мастер</label>
-            <input type="date" name='date' required>
+            <input class="form-control item" type="date" name='date' required>
         </div>
         <div class="element">
             <label for="comment">Опишите проблему</label>
-            <input type="text" name='comment' required>
+            <input class="form-control item" type="text" name='comment' required>
         </div>
         <div class="element">
             <label for="technique">Выберите прибор</label>
-            <select name="technique" required>
+            <select class="form-control item" name="technique" required>
                 <?php foreach ($owners as $id => $value) { ?>
                     <option value="<?= $id ?>"><?= $value->getTechnique() ?></option>
                 <?php } ?>
@@ -43,10 +43,28 @@ use classes\db\DBPostgres;
 <div class="list">
     <?php
     $currentOrders = DBPostgres::getOrderHandler()->getCurrentByClient(PROFILE_ID);
-    foreach ($currentOrders as $order) { ?>
+    foreach ($currentOrders as $order) {
+        $style = '';
+        $status = $order->getStatus();
+        switch ($status) {
+            case 'Отменен':
+                $style = 'status-canceled';
+                break;
+            case 'Поиск':
+                $style = 'status-pending';
+                break;
+            case 'Завершен':
+                $style = 'status-done';
+                break;
+            default:
+                break;
+        } ?>
         <div class="item">
-            <div class='info'>
-                <p>Заказ №<?= $order->getId(); ?> Статус - <?= $order->getStatus(); ?></p>
+            <div class='order'>
+                <div class="order-title">
+                    <p><strong>Заказ №<?= $order->getId(); ?></strong></p>
+                    <span class="status-badge <?= $style ?>"><?= $status ?></span>
+                </div>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>
                 <p>Мастер: <?= $order->getMaster(); ?></p>
@@ -60,18 +78,36 @@ use classes\db\DBPostgres;
 <div class="list">
     <?php
     $oldOrders = DBPostgres::getOrderHandler()->getHistoryByClient(PROFILE_ID);
-    foreach ($oldOrders as $order) { ?>
+    foreach ($oldOrders as $order) {
+        $style = '';
+        $status = $order->getStatus();
+        switch ($status) {
+            case 'Отменен':
+                $style = 'status-canceled';
+                break;
+            case 'Поиск':
+                $style = 'status-pending';
+                break;
+            case 'Завершен':
+                $style = 'status-done';
+                break;
+            default:
+                break;
+        } ?>
         <div class="item">
-            <div class='info'>
-                <?php if ($order->getStatus() == 'Завершен') { ?>
-                    <a href="<?= HOST ?>/orders/<?= $order->getId() ?>/rating/">Оценить заказ</a>
-                <?php } ?>
-                <p>Заказ №<?= $order->getId(); ?> Статус - <?= $order->getStatus(); ?></p>
+            <div class='order'>
+                <div class="order-title">
+                    <p><strong>Заказ №<?= $order->getId(); ?></strong></p>
+                    <span class="status-badge <?= $style ?>"><?= $status ?></span>
+                </div>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>
                 <p>Мастер: <?= $order->getMaster(); ?></p>
                 <p>Оплата: <?= $order->getPayment(); ?></p>
                 <p>Комментарий: <?= $order->getContent(); ?></p>
+                <?php if ($order->getStatus() == 'Завершен') { ?>
+                    <a href="<?= HOST ?>/orders/<?= $order->getId() ?>/rating/">Оценить заказ</a>
+                <?php } ?>
             </div>
         </div>
     <?php } ?>

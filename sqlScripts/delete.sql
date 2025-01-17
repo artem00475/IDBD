@@ -1,19 +1,38 @@
-delete from supportRequest;
-delete from requestStatus;
-delete from masterLog;
-delete from masterStatus;
-delete from orders;
-delete from paymentType;
-delete from orderStatus;
-delete from feedback;
-delete from subscriber;
-delete from owner;
-delete from client;
-delete from plan;
-delete from technique;
-delete from techniqueType;
-delete from qa;
-delete from schedule;
-delete from day;
-delete from master;
-delete from accounts;
+delete
+from supportRequest;
+delete
+from requestStatus;
+delete
+from masterLog;
+delete
+from masterStatus;
+delete
+from orders;
+delete
+from paymentType;
+delete
+from orderStatus;
+delete
+from feedback;
+delete
+from subscriber;
+delete
+from owner;
+delete
+from client;
+delete
+from plan;
+delete
+from technique;
+delete
+from techniqueType;
+delete
+from qa;
+delete
+from schedule;
+delete
+from day;
+delete
+from master;
+delete
+from accounts;

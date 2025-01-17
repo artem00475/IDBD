@@ -1,4 +1,5 @@
 <?php
+
 namespace classes\db\entity;
 class MasterProfile
 {

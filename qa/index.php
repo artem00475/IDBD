@@ -11,11 +11,11 @@ use classes\db\DBPostgres;
         <input type="text" hidden name="action_type" value="qa">
         <div class="element">
             <label for="theme">Тема</label>
-            <input type="text" name='theme' required>
+            <input class="form-control item" type="text" name='theme' required>
         </div>
         <div class="element">
             <label for="comment">Напишите вопрос</label>
-            <input type="text" name='comment' required>
+            <input class="form-control item" type="text" name='comment' required>
         </div>
         <input type="submit" class='btn' value="Сохранить">
     </form>

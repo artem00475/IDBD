@@ -1,5 +1,7 @@
 <?php
+
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\handler\QAHandler;
 

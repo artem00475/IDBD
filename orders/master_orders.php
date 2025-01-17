@@ -37,15 +37,16 @@ if (array_key_exists('action', $_GET) && array_key_exists('id', $_GET)) {
     foreach ($newOrders as $order) { ?>
         <div class="item">
             <div class='order'>
-                <a href="<?= HOST ?>/orders/?action=approve&id=<?= $order->getId(); ?>">Принять заказ</a>
-                <a href="<?= HOST ?>/orders/?action=reject&id=<?= $order->getId(); ?>&date=<?= $order->getDate(); ?>">Отклонить
-                    заказ</a>
                 <p>Заказ №<?= $order->getId(); ?> Статус - <?= $order->getStatus(); ?></p>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>
                 <p>Клиент: <?= $order->getClient(); ?></p>
                 <p>Цена: <?= $order->getCost(); ?>р</p>
                 <p>Комментарий: <?= $order->getContent(); ?></p>
+                <a href="<?= HOST ?>/orders/?action=approve&id=<?= $order->getId(); ?>">Принять заказ</a>
+                <a class="reject"
+                   href="<?= HOST ?>/orders/?action=reject&id=<?= $order->getId(); ?>&date=<?= $order->getDate(); ?>">Отклонить
+                    заказ</a>
             </div>
         </div>
     <?php } ?>
@@ -57,13 +58,13 @@ if (array_key_exists('action', $_GET) && array_key_exists('id', $_GET)) {
     foreach ($currentOrders as $order) { ?>
         <div class="item">
             <div class='order'>
-                <a href="<?= HOST ?>/orders/?action=finish&id=<?= $order->getId(); ?>">Завершить заказ</a>
                 <p>Заказ №<?= $order->getId(); ?> Статус - <?= $order->getStatus(); ?></p>
                 <p>Тип техники: <?= $order->getTechnique(); ?></p>
                 <p>Дата ремонта: <?= $order->getDate(); ?></p>
                 <p>Клиент: <?= $order->getClient(); ?></p>
                 <p>Цена: <?= $order->getCost(); ?>р</p>
                 <p>Комментарий: <?= $order->getContent(); ?></p>
+                <a href="<?= HOST ?>/orders/?action=finish&id=<?= $order->getId(); ?>">Завершить заказ</a>
             </div>
         </div>
     <?php } ?>

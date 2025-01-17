@@ -37,11 +37,12 @@ class DBPostgres extends DB
 {
 
     private static string $dsn = "pgsql:host=pg" .
-        ";port=5432;dbname=studs" .
-        ";user=" .
-        ";password=" ;
+    ";port=5432;dbname=studs" .
+    ";user=" .
+    ";password=";
 
     private static ?PDO $db_connect = null;
+
     static function connect(): void
     {
         try {

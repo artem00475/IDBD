@@ -22,7 +22,7 @@ use classes\db\DBPostgres;
                 <p>Стаж(год): <?= $worker['EXPERIENCE']; ?></p>
                 <p>Квалификация: <?= $worker['QUALIFICATION']; ?></p>
                 <p>Расписание: <?= $schedule; ?></p>
-                <a href="<?= HOST ?>/orders?masterId=<?= $id ?>">Создать заказ</a>
+                <a class="btn" href="<?= HOST ?>/orders?masterId=<?= $id ?>">Создать заказ</a>
             </div>
         </div>
     <?php } ?>

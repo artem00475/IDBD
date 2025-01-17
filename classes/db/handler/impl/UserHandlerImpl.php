@@ -1,5 +1,7 @@
 <?php
+
 namespace classes\db\handler\impl;
+
 use classes\db\DBPostgres;
 use classes\db\entity\User;
 use classes\db\handler\UserHandler;
@@ -22,7 +24,7 @@ class UserHandlerImpl implements UserHandler
 
         if ($obj['create_user']) {
             $obj['create_user'] = trim($obj['create_user'], '()');
-            $ar = explode(",",$obj['create_user']);
+            $ar = explode(",", $obj['create_user']);
             return $ar[0] ?: 0;
         } else {
             return 0;
@@ -57,7 +59,7 @@ class UserHandlerImpl implements UserHandler
         $obj = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($obj['get_user']) {
             $obj['get_user'] = trim($obj['get_user'], '()');
-            $ar = explode(",",$obj['get_user']);
+            $ar = explode(",", $obj['get_user']);
             $user = new User();
             $user->setLogin($ar[0]);
             $user->setName($ar[1]);
@@ -81,7 +83,7 @@ class UserHandlerImpl implements UserHandler
 
         if ($obj['check_password']) {
             $obj['check_password'] = trim($obj['check_password'], '()');
-            $ar = explode(",",$obj['check_password']);
+            $ar = explode(",", $obj['check_password']);
             return $ar[0] ?: 0;
         } else {
             return 0;

@@ -4,7 +4,7 @@
     <input type="text" hidden name="action_type" value="schedule">
     <div class="element">
         <label for="days[]">Выберите дни</label>
-        <select name="days[]" required multiple="multiple">
+        <select class="form-control item" name="days[]" required multiple="multiple">
             <option value="1">Понедельник</option>
             <option value="2">Вторник</option>
             <option value="3">Среда</option>
